@@ -9,3 +9,5 @@ Commands and results for the initial public package are recorded after local exe
 - Generic quickstart SVG: 14 nodes, 2 connectors; static errors=0, warnings=0. OpenAPI conversion and PNG render succeeded; image reviewed for Chinese text, card boundaries and arrows.
 - Tenant URL/identifier and author machine path scan: no private source locators in published files. Raw boards, tenant previews and fetch scripts excluded.
 - Cloud writes and actual Feishu image round trip: not run as part of package validation. Current user task publishes a skill, not a new test document.
+
+- Remote installation: `npx skills add https://github.com/chengjialu8888/design_lark_chart --skill design-lark-chart --agent codex --copy -y` completed successfully in an isolated temporary project; installed-copy local preflight passed. No existing user skill installation was overwritten.
