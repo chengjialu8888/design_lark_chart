@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="320" viewBox="0 0 1000 320">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#315D7D"/></marker></defs>
+<rect x="0" y="0" width="1000" height="320" fill="#FAF8F3"/>
+<text x="40" y="48" font-size="28" fill="#183A54">交付流程示例：先定验收，再执行与回查</text>
+<rect x="40" y="100" width="260" height="120" rx="12" fill="#DFEAF4"/>
+<text x="60" y="140" font-size="22" fill="#183A54">明确需求与验收</text><text x="60" y="180" font-size="18" fill="#263746">角色、输入、产出与责任</text>
+<line x1="300" y1="160" x2="360" y2="160" stroke="#315D7D" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="370" y="100" width="260" height="120" rx="12" fill="#E1EFE5"/>
+<text x="390" y="140" font-size="22" fill="#183A54">执行与集成</text><text x="390" y="180" font-size="18" fill="#263746">按实际依赖组织并行</text>
+<line x1="630" y1="160" x2="690" y2="160" stroke="#315D7D" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="700" y="100" width="260" height="120" rx="12" fill="#FFF0D7"/>
+<text x="720" y="140" font-size="22" fill="#183A54">验证与处理异常</text><text x="720" y="180" font-size="18" fill="#263746">失败归因后修复与回归</text>
+<text x="40" y="280" font-size="17" fill="#586774">通用演示，不代表任何公司的实际流程或时间。</text></svg>
