@@ -7,3 +7,5 @@
 - Consulting structure guidance is newly written for this package. [likaku/Mck-ppt-design-skill](https://github.com/likaku/Mck-ppt-design-skill) is an optional reference for a complete presentation engine, not bundled code or a mandatory dependency.
 
 Do not include private reports, source tokens, credentials or generated client work in public contributions. A public repository does not grant access to any Feishu tenant. No end-to-end compatibility claim is made without the corresponding test artifact.
+
+- Dense consulting visual preset: user-provided prompt, palette and visual constraints. The linked `mck-ppt-design` skill provides content-structure guidance; its code/engine is not bundled. The preset does not imply affiliation with or endorsement by McKinsey & Company. No private case data is included.

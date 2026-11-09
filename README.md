@@ -36,6 +36,14 @@ python3 ~/.codex/skills/design-lark-chart/scripts/preflight.py
 
 > 把个人工作安排与工具串起来。有可靠时长才画分配条；只有活动描述就用定性日程卡，不能凑百分比。
 
+## Mck 内容框架 × 高密度视觉模板
+
+两者分层关联：**`mck-ppt-design` 负责内容框架结构化，本包的视觉模板负责色号、字体与排版**。先整理金字塔结构和结论型标题，再由 design-lark-chart 应用视觉预设并绘制、检查飞书画板；关联 Mck 不意味着本任务要生成 PPTX。
+
+当画板文字一大片、重点不清时，可选用 [16:9 高密度视觉模板](references/mck-dense-visual.md)：白底，深海军蓝 `#071F2D`、深青 `#005A78`、亮青 `#00A9E0`、浅蓝 `#A9C6F5`、灰 `#D9DDE1`；粗体衬线标题、紧凑无衬线正文、多栏、细线和精确对齐，避免圆角卡片、装饰、过大图形与过多留白。完整原始提示词、调用示例和 [JSON 参数](assets/style-tokens/mck-dense-consulting.json) 随包提供。
+
+关联的内容 skill：[likaku/Mck-ppt-design-skill](https://github.com/likaku/Mck-ppt-design-skill)。可独立使用本绘图包；实际调用 Mck 时先按上游说明安装并读取，不打包其引擎或覆盖本机现有安装。
+
 ## 可复刻的检查
 
 ```bash

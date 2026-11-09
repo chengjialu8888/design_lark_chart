@@ -11,3 +11,11 @@ Commands and results for the initial public package are recorded after local exe
 - Cloud writes and actual Feishu image round trip: not run as part of package validation. Current user task publishes a skill, not a new test document.
 
 - Remote installation: `npx skills add https://github.com/chengjialu8888/design_lark_chart --skill design-lark-chart --agent codex --copy -y` completed successfully in an isolated temporary project; installed-copy local preflight passed. No existing user skill installation was overwritten.
+
+## Dense visual preset — 2026-11-09
+
+- Added `mck-dense-consulting` as an opt-in visual preset; linked `mck-ppt-design` as the content-framework layer. No Mck engine code is bundled and no executable rendering logic changed.
+- Verified the six exact colors are readable by both the existing style-seed loader and `plan.style_budget` color loader, with no fallback notes.
+- Verified the original supplied prompt is preserved exactly, relative Markdown links resolve, JSON assets parse, and `git diff --check` passes.
+- Reviewed changed public files for private tenant URLs, local user paths, transient login parameters and private document identifiers; none included.
+- No cloud write, new rendered example, font verification or visual round trip was performed for this documentation/preset update. Per-artifact checks remain required when the preset is used.

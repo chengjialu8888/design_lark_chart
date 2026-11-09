@@ -1,0 +1,97 @@
+{
+  "id": "mck-dense-consulting",
+  "kind": "user-specified-visual-preset",
+  "cn": "高密度咨询画板视觉预设",
+  "use_case": "用户指定此风格，或文字成片、重点不清时重排",
+  "content_framework": {
+    "skill": "mck-ppt-design",
+    "url": "https://github.com/likaku/Mck-ppt-design-skill",
+    "responsibility": "内容框架、金字塔原则、结论型标题与论据分组"
+  },
+  "canvas": {
+    "aspect_ratio": "16:9",
+    "background": "#FFFFFF"
+  },
+  "color_roles": {
+    "background": "#FFFFFF",
+    "heading_and_emphasis": "#071F2D",
+    "chart": "#005A78",
+    "highlight": "#00A9E0",
+    "secondary_data": "#A9C6F5",
+    "divider": "#D9DDE1"
+  },
+  "style": {
+    "palette": {
+      "fill_colors": [
+        {
+          "value": "#FFFFFF"
+        },
+        {
+          "value": "#071F2D"
+        },
+        {
+          "value": "#005A78"
+        },
+        {
+          "value": "#00A9E0"
+        },
+        {
+          "value": "#A9C6F5"
+        },
+        {
+          "value": "#D9DDE1"
+        }
+      ],
+      "border_colors": [
+        {
+          "value": "#D9DDE1"
+        },
+        {
+          "value": "#005A78"
+        }
+      ],
+      "text_colors": [
+        {
+          "value": "#071F2D"
+        }
+      ]
+    },
+    "typography": {
+      "heading": {
+        "family": "serif",
+        "weight": "bold"
+      },
+      "body": {
+        "family": "sans-serif",
+        "density": "compact"
+      },
+      "font_sizes": "resolve per layout and verify at document width"
+    },
+    "shape": {
+      "corner_radius": 0,
+      "dividers": "thin"
+    },
+    "layout": {
+      "columns": "content-driven",
+      "alignment": "precise",
+      "information_density": "high without shrinking text or deleting facts"
+    }
+  },
+  "style_budget": {
+    "allowed_colors": [
+      "#FFFFFF",
+      "#071F2D",
+      "#005A78",
+      "#00A9E0",
+      "#A9C6F5",
+      "#D9DDE1"
+    ]
+  },
+  "avoid": [
+    "excessive whitespace",
+    "decorative elements",
+    "rounded cards",
+    "oversized graphics"
+  ],
+  "validation_scope": "Preset/contract only; requires per-artifact render and cloud verification."
+}

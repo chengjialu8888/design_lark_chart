@@ -2,7 +2,7 @@
 name: design-lark-chart
 description: Create editable Feishu/Lark flowcharts, organization diagrams, timelines, workload views and consulting report visuals from supplied evidence; includes semantic colours, structured writing, SVG compatibility and publish/verify guidance. Use when asked to draw or refine diagrams in Feishu documents.
 metadata:
-  version: "1.3.0"
+  version: "1.3.1"
 ---
 
 # Design Lark Chart
@@ -15,6 +15,13 @@ metadata:
 2. 使用用户已提供的目标、读者、风格和材料；缺少且影响输出时再澄清。链接不可访问时登记缺口，不能编造内部流程。
 3. 先确定问题、角色、输入、产出、交接、依赖、时间与异常分支，再选择图型。框架、层数、节点数均由内容决定，不套固定业务模板。
 4. 默认按 [结构化报告视觉](references/report-visuals.md)组织文案；重点流程／个人时间用语义彩色，辅助关系图采用简洁矩阵／分层卡片。
+
+## 内容框架与视觉模板分层
+
+- `mck-ppt-design` 是关联的内容结构 skill：金字塔原则、结论型标题、论据分组和平行表达；本包不包含它的引擎，只有任务需要且已安装／读取时才称为调用。完整 PPTX 另走其上游流程。
+- 用户提供的高密度模板是**视觉预设**：16:9、严格六色色号、字体、多栏与对齐；不代替内容结构，也不套固定业务节点。
+- 用户指定此风格，或“文字成片、重点不清”时，读取 [Mck 高密度视觉模板](references/mck-dense-visual.md) 和 [样式参数](assets/style-tokens/mck-dense-consulting.json)。先结构化内容，再注入视觉预设，最后按本 skill 渲染和验收飞书画板。
+- 未选择该预设时继续使用本任务已选样式；预设采用白底与直角布局，选用后在本图内统一覆盖暖底／圆角卡片，保留真实流程、数据与证据。
 
 ## 选路与按需读取
 
