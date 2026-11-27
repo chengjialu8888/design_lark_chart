@@ -9,3 +9,9 @@
 Do not include private reports, source tokens, credentials or generated client work in public contributions. A public repository does not grant access to any Feishu tenant. No end-to-end compatibility claim is made without the corresponding test artifact.
 
 - Dense consulting visual preset: user-provided prompt, palette and visual constraints. The linked `mck-ppt-design` skill provides content-structure guidance; its code/engine is not bundled. The preset does not imply affiliation with or endorsement by McKinsey & Company. No private case data is included.
+
+## Optional module integration — 1.4.0
+
+At the user's explicit request, four complete user-selected AgentBuddy packages are included under `skills/`: research-tech-visualization 0.3.0, system-swimlane-diagram 1.0.0, architecture-story 0.15.0, and crayon-tech-diagram 1.0.0. Per-package `ORIGIN.md` and `assets/extension-modules.json` preserve names, upstream versions and original source-tree fingerprints. No separate license files were supplied by those packages; this repository does not invent upstream authors or grant a blanket license to third-party materials. Existing upstream terms remain applicable.
+
+Crayon invocation notes are adapted for available host image tools rather than requiring an internal provider. Source diagrams and demonstrations are reference assets, not evidence of a user's system or experiment. No marketplace authentication, tenant report documents, user login state or registry cache is distributed. The npm `private` marker in the offline animation runtime manifest means it is not published as an npm package; the runtime is bundled for local execution only.

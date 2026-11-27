@@ -1,0 +1,1881 @@
+{
+  "version": 2,
+  "id": "shared-result",
+  "title": "同一批任务：共享槽位 → 独立结果",
+  "notice": "机制示意，非真实执行记录。假设 A 写入、B 写入，然后读取；P、rA、rB 为符号数据。",
+  "playback": {
+    "mode": "interactive",
+    "end": "replay",
+    "selector": true
+  },
+  "actors": [
+    {
+      "id": "before",
+      "label": "共享槽位",
+      "kind": "group"
+    },
+    {
+      "id": "after",
+      "label": "独立结果",
+      "kind": "group"
+    },
+    {
+      "id": "oa",
+      "label": "A",
+      "kind": "service"
+    },
+    {
+      "id": "ob",
+      "label": "B",
+      "kind": "service"
+    },
+    {
+      "id": "na",
+      "label": "A",
+      "kind": "service"
+    },
+    {
+      "id": "nb",
+      "label": "B",
+      "kind": "service"
+    },
+    {
+      "id": "old",
+      "label": "目录 P",
+      "kind": "document"
+    },
+    {
+      "id": "new",
+      "label": "目录 P",
+      "kind": "document"
+    },
+    {
+      "id": "ra",
+      "label": "rA",
+      "kind": "message"
+    },
+    {
+      "id": "rb",
+      "label": "rB",
+      "kind": "message"
+    }
+  ],
+  "relations": [
+    {
+      "id": "write-a",
+      "from": "oa",
+      "to": "old",
+      "kind": "message",
+      "label": "rA",
+      "requires": [
+        "frozen"
+      ],
+      "produces": [
+        "old-a"
+      ]
+    },
+    {
+      "id": "write-b",
+      "from": "ob",
+      "to": "old",
+      "kind": "message",
+      "label": "rB",
+      "requires": [
+        "old-a",
+        "new-a"
+      ],
+      "produces": [
+        "old-b"
+      ]
+    },
+    {
+      "id": "make-a",
+      "from": "na",
+      "to": "ra",
+      "kind": "message",
+      "label": "rA",
+      "requires": [
+        "frozen"
+      ],
+      "produces": [
+        "new-a"
+      ]
+    },
+    {
+      "id": "make-b",
+      "from": "nb",
+      "to": "rb",
+      "kind": "message",
+      "label": "rB",
+      "requires": [
+        "old-a",
+        "new-a"
+      ],
+      "produces": [
+        "new-b"
+      ]
+    },
+    {
+      "id": "read-a",
+      "from": "old",
+      "to": "oa",
+      "kind": "return",
+      "label": "rB",
+      "requires": [
+        "old-b"
+      ],
+      "produces": [
+        "read-a"
+      ]
+    },
+    {
+      "id": "read-b",
+      "from": "old",
+      "to": "ob",
+      "kind": "return",
+      "label": "rB",
+      "requires": [
+        "old-b"
+      ],
+      "produces": [
+        "read-b"
+      ]
+    },
+    {
+      "id": "public-a",
+      "from": "new",
+      "to": "ra",
+      "kind": "dependency",
+      "label": "只读 P",
+      "requires": [],
+      "produces": []
+    },
+    {
+      "id": "public-b",
+      "from": "new",
+      "to": "rb",
+      "kind": "dependency",
+      "label": "只读 P",
+      "requires": [],
+      "produces": []
+    }
+  ],
+  "contract": {
+    "sources": [
+      {
+        "id": "assumption",
+        "reference": "Explicit illustrative assumption: two jobs share catalog P; A writes rA, B writes rB, then both read.",
+        "scope": "Abstract mutable-slot counterexample and per-job result alternative. No real system, measured timing, deployment or failure-frequency claim."
+      }
+    ],
+    "facts": [
+      {
+        "id": "input",
+        "description": "input",
+        "source": "assumption",
+        "origin": "external",
+        "after": []
+      },
+      {
+        "id": "frozen",
+        "description": "frozen",
+        "source": "assumption",
+        "origin": "external",
+        "after": [
+          "input"
+        ]
+      },
+      {
+        "id": "old-a",
+        "description": "old-a",
+        "source": "assumption",
+        "origin": "flow",
+        "after": [
+          "frozen"
+        ]
+      },
+      {
+        "id": "new-a",
+        "description": "new-a",
+        "source": "assumption",
+        "origin": "flow",
+        "after": [
+          "frozen"
+        ]
+      },
+      {
+        "id": "old-b",
+        "description": "old-b",
+        "source": "assumption",
+        "origin": "flow",
+        "after": [
+          "old-a",
+          "new-a"
+        ]
+      },
+      {
+        "id": "new-b",
+        "description": "new-b",
+        "source": "assumption",
+        "origin": "flow",
+        "after": [
+          "old-a",
+          "new-a"
+        ]
+      },
+      {
+        "id": "read-a",
+        "description": "read-a",
+        "source": "assumption",
+        "origin": "flow",
+        "after": [
+          "old-b"
+        ]
+      },
+      {
+        "id": "read-b",
+        "description": "read-b",
+        "source": "assumption",
+        "origin": "flow",
+        "after": [
+          "old-b"
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "id": "guard-ra",
+        "type": "requires",
+        "actor": "ra",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "new-a",
+          "frozen"
+        ]
+      },
+      {
+        "id": "guard-rb",
+        "type": "requires",
+        "actor": "rb",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "new-b",
+          "frozen"
+        ]
+      },
+      {
+        "id": "private-results",
+        "type": "independent",
+        "actors": [
+          "ra",
+          "rb"
+        ]
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "label": "同一输入",
+      "detail": "A / B 使用同一份公共事实",
+      "duration": 5000,
+      "height": 600,
+      "narrowHeight": 900,
+      "frames": [
+        {
+          "at": 0,
+          "caption": "两条路径收到相同的 A、B 与 P。",
+          "items": {
+            "oa": {
+              "wide": [
+                0.035,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "ob": {
+              "wide": [
+                0.275,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "old": {
+              "wide": [
+                0.13,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                185,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "normal",
+              "label": "结果：—"
+            },
+            "na": {
+              "wide": [
+                0.535,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "nb": {
+              "wide": [
+                0.775,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "new": {
+              "wide": [
+                0.63,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                635,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "normal",
+              "label": "P · 待冻结"
+            },
+            "before": {
+              "wide": [
+                0.008,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                8,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "共享槽位",
+              "contains": [
+                "oa",
+                "ob",
+                "old"
+              ]
+            },
+            "after": {
+              "wide": [
+                0.508,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                458,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "独立结果",
+              "contains": [
+                "na",
+                "nb",
+                "new"
+              ]
+            }
+          },
+          "links": [],
+          "facts": [
+            "input"
+          ]
+        },
+        {
+          "at": 1400,
+          "caption": "右侧冻结公共事实；结果另存。",
+          "items": {
+            "oa": {
+              "wide": [
+                0.035,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "ob": {
+              "wide": [
+                0.275,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "old": {
+              "wide": [
+                0.13,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                185,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "normal",
+              "label": "结果：—"
+            },
+            "na": {
+              "wide": [
+                0.535,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "nb": {
+              "wide": [
+                0.775,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "new": {
+              "wide": [
+                0.63,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                635,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "done",
+              "label": "P · 只读"
+            },
+            "before": {
+              "wide": [
+                0.008,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                8,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "共享槽位",
+              "contains": [
+                "oa",
+                "ob",
+                "old"
+              ]
+            },
+            "after": {
+              "wide": [
+                0.508,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                458,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "独立结果",
+              "contains": [
+                "na",
+                "nb",
+                "new"
+              ]
+            }
+          },
+          "links": [],
+          "facts": [
+            "input",
+            "frozen"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "A 写入",
+      "detail": "rA 进入共享槽位，或成为独立结果",
+      "duration": 5000,
+      "height": 600,
+      "narrowHeight": 900,
+      "frames": [
+        {
+          "at": 0,
+          "caption": "A 产生 rA。",
+          "items": {
+            "oa": {
+              "wide": [
+                0.035,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "ob": {
+              "wide": [
+                0.275,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "old": {
+              "wide": [
+                0.13,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                185,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "normal",
+              "label": "结果：—"
+            },
+            "na": {
+              "wide": [
+                0.535,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "nb": {
+              "wide": [
+                0.775,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "new": {
+              "wide": [
+                0.63,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                635,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "done",
+              "label": "P · 只读"
+            },
+            "before": {
+              "wide": [
+                0.008,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                8,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "共享槽位",
+              "contains": [
+                "oa",
+                "ob",
+                "old"
+              ]
+            },
+            "after": {
+              "wide": [
+                0.508,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                458,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "独立结果",
+              "contains": [
+                "na",
+                "nb",
+                "new",
+                "ra"
+              ]
+            },
+            "ra": {
+              "wide": [
+                0.512,
+                205,
+                0.09,
+                66
+              ],
+              "narrow": [
+                0.024,
+                650,
+                0.18,
+                62
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "rA"
+            }
+          },
+          "links": [
+            {
+              "relation": "write-a",
+              "state": "flow",
+              "travel": 1000
+            },
+            {
+              "relation": "make-a",
+              "state": "flow",
+              "travel": 1000
+            }
+          ],
+          "facts": [
+            "input",
+            "frozen"
+          ]
+        },
+        {
+          "at": 1600,
+          "caption": "相同的 rA，不同的存放位置。",
+          "items": {
+            "oa": {
+              "wide": [
+                0.035,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "ob": {
+              "wide": [
+                0.275,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "old": {
+              "wide": [
+                0.13,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                185,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "normal",
+              "label": "结果：rA"
+            },
+            "na": {
+              "wide": [
+                0.535,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "nb": {
+              "wide": [
+                0.775,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "new": {
+              "wide": [
+                0.63,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                635,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "done",
+              "label": "P · 只读"
+            },
+            "ra": {
+              "wide": [
+                0.535,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                800,
+                0.38,
+                86
+              ],
+              "lines": [
+                "归属 A"
+              ],
+              "state": "done",
+              "label": "A → rA"
+            },
+            "before": {
+              "wide": [
+                0.008,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                8,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "共享槽位",
+              "contains": [
+                "oa",
+                "ob",
+                "old"
+              ]
+            },
+            "after": {
+              "wide": [
+                0.508,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                458,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "独立结果",
+              "contains": [
+                "na",
+                "nb",
+                "new",
+                "ra"
+              ]
+            }
+          },
+          "links": [
+            {
+              "relation": "public-a",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "input",
+            "frozen",
+            "old-a",
+            "new-a"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "B 写入",
+      "detail": "rB 覆盖 rA，或与 rA 并存",
+      "duration": 5000,
+      "height": 600,
+      "narrowHeight": 900,
+      "frames": [
+        {
+          "at": 0,
+          "caption": "B 产生 rB。",
+          "items": {
+            "oa": {
+              "wide": [
+                0.035,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "ob": {
+              "wide": [
+                0.275,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "old": {
+              "wide": [
+                0.13,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                185,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "normal",
+              "label": "结果：rA"
+            },
+            "na": {
+              "wide": [
+                0.535,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "nb": {
+              "wide": [
+                0.775,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "new": {
+              "wide": [
+                0.63,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                635,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "done",
+              "label": "P · 只读"
+            },
+            "ra": {
+              "wide": [
+                0.535,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                800,
+                0.38,
+                86
+              ],
+              "lines": [
+                "归属 A"
+              ],
+              "state": "done",
+              "label": "A → rA"
+            },
+            "before": {
+              "wide": [
+                0.008,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                8,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "共享槽位",
+              "contains": [
+                "oa",
+                "ob",
+                "old"
+              ]
+            },
+            "after": {
+              "wide": [
+                0.508,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                458,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "独立结果",
+              "contains": [
+                "na",
+                "nb",
+                "new",
+                "ra",
+                "rb"
+              ]
+            },
+            "rb": {
+              "wide": [
+                0.898,
+                205,
+                0.09,
+                66
+              ],
+              "narrow": [
+                0.796,
+                650,
+                0.18,
+                62
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "rB"
+            }
+          },
+          "links": [
+            {
+              "relation": "write-b",
+              "state": "flow",
+              "travel": 1000
+            },
+            {
+              "relation": "make-b",
+              "state": "flow",
+              "travel": 1000
+            },
+            {
+              "relation": "public-a",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "input",
+            "frozen",
+            "old-a",
+            "new-a"
+          ]
+        },
+        {
+          "at": 1600,
+          "caption": "左侧 rA 消失；右侧保留两个结果。",
+          "items": {
+            "oa": {
+              "wide": [
+                0.035,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "ob": {
+              "wide": [
+                0.275,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                55,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "old": {
+              "wide": [
+                0.13,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                185,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "waiting",
+              "label": "结果：rB"
+            },
+            "na": {
+              "wide": [
+                0.535,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "A"
+            },
+            "nb": {
+              "wide": [
+                0.775,
+                72,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                505,
+                0.38,
+                86
+              ],
+              "lines": [
+                "输入 P"
+              ],
+              "state": "normal",
+              "label": "B"
+            },
+            "new": {
+              "wide": [
+                0.63,
+                245,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                635,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "done",
+              "label": "P · 只读"
+            },
+            "ra": {
+              "wide": [
+                0.535,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                800,
+                0.38,
+                86
+              ],
+              "lines": [
+                "归属 A"
+              ],
+              "state": "done",
+              "label": "A → rA"
+            },
+            "rb": {
+              "wide": [
+                0.775,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                800,
+                0.38,
+                86
+              ],
+              "lines": [
+                "归属 B"
+              ],
+              "state": "done",
+              "label": "B → rB"
+            },
+            "before": {
+              "wide": [
+                0.008,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                8,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "共享槽位",
+              "contains": [
+                "oa",
+                "ob",
+                "old"
+              ]
+            },
+            "after": {
+              "wide": [
+                0.508,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                458,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "独立结果",
+              "contains": [
+                "na",
+                "nb",
+                "new",
+                "ra",
+                "rb"
+              ]
+            }
+          },
+          "links": [
+            {
+              "relation": "public-a",
+              "state": "idle"
+            },
+            {
+              "relation": "public-b",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "input",
+            "frozen",
+            "old-a",
+            "new-a",
+            "old-b",
+            "new-b"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "输出对照",
+      "detail": "B 的写入是否改变 A 的结果？",
+      "duration": 5000,
+      "height": 600,
+      "narrowHeight": 900,
+      "frames": [
+        {
+          "at": 0,
+          "caption": "左侧 A、B 都读取共享槽位。",
+          "items": {
+            "oa": {
+              "wide": [
+                0.035,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                350,
+                0.38,
+                86
+              ],
+              "lines": [
+                "期望 rA"
+              ],
+              "state": "normal",
+              "label": "A · 读取"
+            },
+            "ob": {
+              "wide": [
+                0.275,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                350,
+                0.38,
+                86
+              ],
+              "lines": [
+                "期望 rB"
+              ],
+              "state": "normal",
+              "label": "B · 读取"
+            },
+            "old": {
+              "wide": [
+                0.13,
+                80,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                65,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "waiting",
+              "label": "结果：rB"
+            },
+            "new": {
+              "wide": [
+                0.63,
+                80,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                515,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "done",
+              "label": "P · 只读"
+            },
+            "ra": {
+              "wide": [
+                0.535,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                800,
+                0.38,
+                86
+              ],
+              "lines": [
+                "归属 A"
+              ],
+              "state": "done",
+              "label": "A → rA"
+            },
+            "rb": {
+              "wide": [
+                0.775,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                800,
+                0.38,
+                86
+              ],
+              "lines": [
+                "归属 B"
+              ],
+              "state": "done",
+              "label": "B → rB"
+            },
+            "before": {
+              "wide": [
+                0.008,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                8,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "共享槽位",
+              "contains": [
+                "oa",
+                "ob",
+                "old"
+              ]
+            },
+            "after": {
+              "wide": [
+                0.508,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                458,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "独立结果",
+              "contains": [
+                "new",
+                "ra",
+                "rb"
+              ]
+            }
+          },
+          "links": [
+            {
+              "relation": "read-a",
+              "state": "flow",
+              "travel": 1000
+            },
+            {
+              "relation": "read-b",
+              "state": "flow",
+              "travel": 1000
+            },
+            {
+              "relation": "public-a",
+              "state": "idle"
+            },
+            {
+              "relation": "public-b",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "input",
+            "frozen",
+            "old-a",
+            "new-a",
+            "old-b",
+            "new-b"
+          ]
+        },
+        {
+          "at": 1600,
+          "caption": "左侧 A 读到 rB；右侧 A 仍持有 rA。",
+          "items": {
+            "oa": {
+              "wide": [
+                0.035,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                350,
+                0.38,
+                86
+              ],
+              "lines": [
+                "期望 rA"
+              ],
+              "state": "waiting",
+              "label": "A → rB ×"
+            },
+            "ob": {
+              "wide": [
+                0.275,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                350,
+                0.38,
+                86
+              ],
+              "lines": [
+                "期望 rB"
+              ],
+              "state": "done",
+              "label": "B → rB"
+            },
+            "old": {
+              "wide": [
+                0.13,
+                80,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                65,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "waiting",
+              "label": "结果：rB"
+            },
+            "new": {
+              "wide": [
+                0.63,
+                80,
+                0.24,
+                134
+              ],
+              "narrow": [
+                0.26,
+                515,
+                0.48,
+                132
+              ],
+              "lines": [
+                "公共事实 P"
+              ],
+              "state": "done",
+              "label": "P · 只读"
+            },
+            "ra": {
+              "wide": [
+                0.535,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.07,
+                800,
+                0.38,
+                86
+              ],
+              "lines": [
+                "归属 A"
+              ],
+              "state": "done",
+              "label": "A → rA"
+            },
+            "rb": {
+              "wide": [
+                0.775,
+                470,
+                0.19,
+                92
+              ],
+              "narrow": [
+                0.55,
+                800,
+                0.38,
+                86
+              ],
+              "lines": [
+                "归属 B"
+              ],
+              "state": "done",
+              "label": "B → rB"
+            },
+            "before": {
+              "wide": [
+                0.008,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                8,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "共享槽位",
+              "contains": [
+                "oa",
+                "ob",
+                "old"
+              ]
+            },
+            "after": {
+              "wide": [
+                0.508,
+                12,
+                0.484,
+                570
+              ],
+              "narrow": [
+                0.016,
+                458,
+                0.968,
+                434
+              ],
+              "lines": [],
+              "state": "normal",
+              "label": "独立结果",
+              "contains": [
+                "new",
+                "ra",
+                "rb"
+              ]
+            }
+          },
+          "links": [
+            {
+              "relation": "read-a",
+              "state": "idle"
+            },
+            {
+              "relation": "read-b",
+              "state": "idle"
+            },
+            {
+              "relation": "public-a",
+              "state": "idle"
+            },
+            {
+              "relation": "public-b",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "input",
+            "frozen",
+            "old-a",
+            "new-a",
+            "old-b",
+            "new-b",
+            "read-a",
+            "read-b"
+          ]
+        }
+      ]
+    }
+  ]
+}

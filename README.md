@@ -26,7 +26,7 @@ python3 ~/.codex/skills/design-lark-chart/scripts/preflight.py
 - Node.js ≥20，npm／npx；Python ≥3.10 用于自带检查脚本，Bash 用于旧版包装脚本。Windows 可用 WSL 跑这些脚本。
 - 飞书官方 CLI 安装、登录与权限配置：[larksuite/cli](https://github.com/larksuite/cli)。
 - 画板转换工具：[@larksuite/whiteboard-cli](https://www.npmjs.com/package/@larksuite/whiteboard-cli)，按 references/setup.md 使用兼容版本。
-- 能查看 PNG／截图的 Agent；浏览器预览是可替代项。无需 Office、PPT 引擎、图片生成 API 或本仓库作者的飞书权限。
+- 能查看 PNG／截图的 Agent；浏览器预览是可替代项。基础画板不需要 Office、PPT 引擎或图片生成 API；新增动画需要 Node ≥20，手绘实际生图需要可用图像工具，科研浏览器检查需要已有 Playwright/Chromium。所有飞书操作使用用户自己的权限。
 
 只安装 skill 不等于完成运行时安装或授权；预检会分别报告。无需另装 beautiful-feishu-whiteboard 或 Mck skill 才能使用本包；需要完整色板库或 PPT 能力再安装上游。
 
@@ -43,6 +43,14 @@ python3 ~/.codex/skills/design-lark-chart/scripts/preflight.py
 当画板文字一大片、重点不清时，可选用 [16:9 高密度视觉模板](references/mck-dense-visual.md)：白底，深海军蓝 `#071F2D`、深青 `#005A78`、亮青 `#00A9E0`、浅蓝 `#A9C6F5`、灰 `#D9DDE1`；粗体衬线标题、紧凑无衬线正文、多栏、细线和精确对齐，避免圆角卡片、装饰、过大图形与过多留白。完整原始提示词、调用示例和 [JSON 参数](assets/style-tokens/mck-dense-consulting.json) 随包提供。
 
 关联的内容 skill：[likaku/Mck-ppt-design-skill](https://github.com/likaku/Mck-ppt-design-skill)。可独立使用本绘图包；实际调用 Mck 时先按上游说明安装并读取，不打包其引擎或覆盖本机现有安装。
+
+## 四类新增绘图能力与独立 ZIP
+
+主 skill 现在按任务加载完整独立模块：[科研技术可视化](skills/research-tech-visualization/SKILL.md)、[系统泳道／数据血缘](skills/system-swimlane-diagram/SKILL.md)、[架构与流程动画](skills/architecture-story/SKILL.md)、[蜡笔手绘技术配图](skills/crayon-tech-diagram/SKILL.md)。版本、运行依赖、交付格式与关联能力见 [扩展说明](references/extensions.md)。
+
+[下载 v1.4.0 的主包与四个独立 ZIP](https://github.com/chengjialu8888/design_lark_chart/releases/tag/v1.4.0)。独立包包含各自实际需要的 references、assets、scripts 和动画 runtime，不依赖整仓或作者机器。架构动画可离线导出；手绘生图、浏览器检查和飞书分享所需的外部工具仍按需准备。
+
+写作、源码阅读、交接和规则入图仅作为按需关联；没有把电话／消息分拣并入绘图工具。
 
 ## 可复刻的检查
 

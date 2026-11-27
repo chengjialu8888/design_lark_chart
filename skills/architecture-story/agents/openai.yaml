@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architecture Story"
+  short_description: "Create step-through architecture stories from source evidence"
+  default_prompt: "Use $architecture-story to explain this architecture. Honor the chosen 示例紧凑风 (compact), 架构模块风 (module) or 调用时序风 (sequence), and persist presentation.style. If I ask to compare or choose styles, show the bundled gallery; otherwise preserve an existing choice or default to compact. Keep small role icons, varied semantic lines and arrowheads, quiet groups, state borders, brief badges and a matching legend. Retain objects and aggregate paths; split only for ambiguous ownership. Compact does not mean removing detail."

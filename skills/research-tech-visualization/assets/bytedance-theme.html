@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>字节蓝青 · 科研技术主题</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="themes.css">
+<style>
+body { --radius: 10px; }
+.theme-hero { display: grid; grid-template-columns: 1.35fr 1fr; gap: 64px; align-items: center; padding-block: 64px 48px; }
+.theme-hero > * { min-width: 0; }
+h1 { font-size: clamp(40px, 4.4vw, 62px); letter-spacing: -.04em; margin: 18px 0; }
+h1 span { color: var(--accent); }
+.theme-hero .lead { max-width: 590px; }
+.theme-tag { display: inline-flex; align-items: center; gap: 8px; font: 13px var(--mono-font); color: var(--muted); }
+.theme-tag::before { content: ""; width: 18px; height: 4px; background: var(--highlight); }
+.hero-palette { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 28px; }
+.palette-blocks { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; height: 150px; }
+.palette-blocks .primary { grid-row: span 2; background: var(--accent); }
+.palette-blocks .cyan { background: var(--highlight); }
+.palette-blocks .mint { background: var(--highlight-soft); }
+.palette-blocks > div { border-radius: 6px; }
+.palette-labels { display: flex; justify-content: space-between; gap: 16px; font-size: 13px; margin-top: 20px; }
+.palette-labels strong { display: block; font-size: 15px; }
+.sample-layout { display: grid; grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr); gap: 24px; }
+.sample-layout > * { min-width: 0; }
+.section-top { display: flex; gap: 24px; align-items: baseline; justify-content: space-between; }
+.section-top h2 { font-size: 26px; }
+.demo-panel { padding: 26px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.demo-panel h3 { margin: 0; font-size: 21px; }
+.architecture { width: 100%; min-width: 510px; display: block; font-family: var(--body-font); }
+.architecture text { fill: var(--ink); }
+.diagram-hint { display: none; }
+.architecture .muted-text { fill: var(--muted); }
+.architecture .node { fill: var(--surface); stroke: var(--accent); stroke-width: 1.5; }
+.architecture .edge { fill: none; stroke: var(--accent); stroke-width: 2; }
+.architecture .feedback { stroke: var(--graphic-secondary); stroke-dasharray: 5 4; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; color: var(--muted); font-size: 13px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.line-key { display: inline-block; width: 24px; border-top: 2px solid var(--accent); }
+.line-key.dashed { border-top: 2px dashed var(--graphic-secondary); }
+.chart { margin: 28px 0 20px; }
+.bar-row { display: grid; grid-template-columns: 58px minmax(0, 1fr) 44px; gap: 10px; align-items: center; margin-block: 16px; font-size: 14px; }
+.bar-track { height: 20px; background: var(--accent-soft); border-left: 1px solid var(--muted); }
+.bar { display: block; height: 100%; width: calc(var(--value) * 1%); background: var(--accent); }
+.bar.secondary { background: var(--graphic-secondary); }
+.bar-value { font-family: var(--mono-font); text-align: right; }
+.axis { display: flex; justify-content: space-between; margin: 0 54px 0 68px; font: 12px var(--mono-font); color: var(--muted); }
+.demo-table { margin-top: 18px; }
+.demo-table th, .demo-table td { padding: 7px 10px; }
+.demo-table caption { padding: 0 0 6px; font-size: 13px; }
+.specs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.specs article { border-top: 3px solid var(--accent); padding-top: 12px; }
+.specs h3 { margin: 4px 0 12px; }
+.specs p { font-size: 14px; color: var(--muted); }
+.swatch-row { display: flex; align-items: center; gap: 10px; margin: 10px 0; font-size: 13px; }
+.swatch-dot { width: 20px; height: 20px; border-radius: 4px; border: 1px solid var(--muted); }
+.usage { padding: 16px 20px; background: var(--accent-soft); border-left: 3px solid var(--accent); margin-top: 28px; font-size: 14px; }
+@media (max-width: 1050px) { .sample-layout { grid-template-columns: 1fr; } .theme-hero { gap: 32px; } }
+@media (max-width: 700px) {
+  .theme-hero, .specs { grid-template-columns: 1fr; gap: 28px; }
+  .theme-hero { padding-block: 36px 28px; }
+  .section-top { display: block; }
+  .hero-palette, .demo-panel { padding: 20px; }
+  .specs { gap: 20px; }
+  .diagram-hint { display: block; }
+}
+@media print { .theme-hero, .sample-layout, .specs { display: block; } .demo-panel, .specs article { break-inside: avoid; margin-block: 20px; } .architecture { min-width: 0; } }
+</style>
+</head>
+<body data-theme="bytedance">
+<a class="skip" href="#main">跳到主题预览</a>
+<div class="wrap">
+<header class="site-header"><span class="brand">RESEARCH / VISUAL SYSTEM</span><nav aria-label="主题导航"><a href="#examples">应用示例</a><a href="#specifications">设计规则</a><a href="theme-gallery.html">全部主题</a></nav></header>
+<main id="main">
+<section class="theme-hero" aria-labelledby="theme-title">
+<div><span class="theme-tag">BYTEDANCE / THEME 12</span><h1 id="theme-title">字节蓝青<br><span>让技术，清晰发生。</span></h1><p class="lead">以蓝建立秩序，以青点亮重点。<br>从论文方法到架构关系，再到多实验指标，保留内容本身的精确与克制。</p><p class="meta">本 skill 原创风格主题 · 非字节跳动官方 VI · 不含品牌标志</p></div>
+<figure class="hero-palette"><div class="palette-blocks" aria-hidden="true"><div class="primary"></div><div class="cyan"></div><div class="mint"></div></div><div class="palette-labels"><div><strong>秩序蓝</strong><code>#325AB4</code></div><div><strong>点睛青</strong><code>#00B5C9</code></div><div><strong>浅薄荷</strong><code>#78E6DC</code></div></div><figcaption>深蓝承担信息层级；两种亮青仅作小面积装饰，不承担正文或唯一的信息编码。</figcaption></figure>
+</section>
+<section class="section" id="examples">
+<div class="section-top"><div><p class="eyebrow">01 / IN CONTEXT</p><h2>一套主题，两种阅读任务。</h2></div><p class="meta">以下架构与指标均为合成示意，不代表实际系统或研究结果。</p></div>
+<div class="sample-layout">
+<article class="demo-panel"><h3>结构清楚，关系可追踪</h3><p class="meta">示意流程 · 主路径与校验反馈分开表达</p><p class="scroll-hint diagram-hint">左右滑动查看完整流程；键盘可聚焦后使用方向键。</p>
+<div class="scroll" tabindex="0" role="region" aria-label="示意流程图，窄屏可横向滚动">
+<svg class="architecture" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 530 236" role="img" aria-labelledby="flow-title flow-desc">
+<title id="flow-title">材料、生成与校验的示意流程</title><desc id="flow-desc">材料经处理生成图表，再交付校验。发现问题时，从校验返回生成阶段修改；蓝色实线表示主路径，深青虚线表示反馈。此图仅演示主题。</desc>
+<defs><marker id="arrow-main" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--accent)"></path></marker><marker id="arrow-feedback" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--graphic-secondary)"></path></marker></defs>
+<rect class="node" id="source-node" data-viz-node="component" x="12" y="60" width="132" height="82" rx="8"></rect>
+<rect class="node" id="build-node" data-viz-node="component" x="199" y="60" width="132" height="82" rx="8" style="fill:var(--accent-soft)"></rect>
+<rect class="node" id="verify-node" data-viz-node="component" x="386" y="60" width="132" height="82" rx="8"></rect>
+<line class="edge" x1="144" y1="101" x2="199" y2="101" marker-end="url(#arrow-main)" data-viz-from="source-node" data-viz-to="build-node" data-viz-kind="input"></line>
+<line class="edge" x1="331" y1="101" x2="386" y2="101" marker-end="url(#arrow-main)" data-viz-from="build-node" data-viz-to="verify-node" data-viz-kind="output"></line>
+<polyline class="edge feedback" points="452,142 452,190 265,190 265,142" marker-end="url(#arrow-feedback)" data-viz-from="verify-node" data-viz-to="build-node" data-viz-kind="revision"></polyline>
+<g text-anchor="middle" font-size="16" font-weight="650"><text x="78" y="92" data-viz-owner="source-node">材料输入</text><text x="265" y="92" data-viz-owner="build-node">图表生成</text><text x="452" y="92" data-viz-owner="verify-node">交付校验</text></g>
+<g text-anchor="middle" font-size="14" class="muted-text"><text class="muted-text" x="78" y="118" data-viz-owner="source-node">论文 · 数据</text><text class="muted-text" x="265" y="118" data-viz-owner="build-node">结构 · 表达</text><text class="muted-text" x="452" y="118" data-viz-owner="verify-node">事实 · 可读性</text><text class="muted-text" x="171" y="47">依据</text><text class="muted-text" x="359" y="47">产物</text><text class="muted-text" x="359" y="219">发现问题时返回修改</text></g>
+</svg>
+</div><div class="legend"><span><i class="line-key" aria-hidden="true"></i>主路径</span><span><i class="line-key dashed" aria-hidden="true"></i>校验反馈</span></div><p class="meta">文字、节点和连线均可编辑；线型有含义，不用颜色代替关系说明。</p>
+</article>
+<article class="demo-panel"><h3>比较准确，数值不修饰</h3><p class="meta">示意任务完成率 · 同一 0–100% 标尺 · 未提供误差</p>
+<figure class="chart" aria-label="合成示意：方法甲完成率64%，方法乙78%"><div class="bar-row"><span>方法甲</span><div class="bar-track"><span class="bar" style="--value:64"></span></div><span class="bar-value">64%</span></div><div class="bar-row"><span>方法乙</span><div class="bar-track"><span class="bar secondary" style="--value:78"></span></div><span class="bar-value">78%</span></div><div class="axis" aria-hidden="true"><span>0</span><span>50</span><span>100%</span></div></figure>
+<table class="demo-table"><caption>合成示意数据；无真实运行与样本依据</caption><thead><tr><th scope="col">方法</th><th scope="col">完成率</th><th scope="col">区间</th></tr></thead><tbody><tr><th scope="row">方法甲</th><td>64%</td><td>未提供</td></tr><tr><th scope="row">方法乙</th><td>78%</td><td>未提供</td></tr></tbody></table><p class="meta">方法身份跨图锁定；主题不决定优劣，也不凭两个数值声称显著性。</p>
+</article>
+</div></section>
+<section class="section" id="specifications"><p class="eyebrow">02 / DESIGN RULES</p><h2>不只是配色，更是一套使用约定。</h2>
+<div class="specs">
+<article><h3>背景轻，文字稳</h3><div class="swatch-row"><span class="swatch-dot" style="background:var(--paper)"></span>冷白背景 <code>#F5F8FF</code></div><div class="swatch-row"><span class="swatch-dot" style="background:var(--ink)"></span>深墨正文 <code>#18243B</code></div><div class="swatch-row"><span class="swatch-dot" style="background:var(--graphic-secondary)"></span>深青图形 <code>#087E8B</code></div><p>小字用 ink / muted / link；亮青只点缀。关键边界与箭头使用深色。</p></article>
+<article><h3>留白多，层级少</h3><p>系统无衬线 · 正文 16–18px<br>8px 间距节奏 · 8–12px 圆角<br>细分隔线 · 少量浅底面板</p><p>大标题引出主问题，主图解释关系。避免把每句话都放进卡片。</p></article>
+<article><h3>身份稳定，动效克制</h3><p>离散系列：方法身份<br>连续色阶：有序数值<br>线型与标签：关系含义</p><p>默认静态；动态只解释已核实的机制，保留暂停与静态阅读能力。</p></article>
+</div><div class="usage">使用方式：加载 <code>tokens.css</code> 与 <code>themes.css</code>，设置 <code>data-theme="bytedance"</code>。外部 SVG 与方法配色需单独核对，不会随页面自动换肤。</div>
+</section>
+</main><footer><div class="file-links"><a href="themes.json">颜色真源</a><a href="theme-gallery.html#bytedance">主题色板</a><a href="gallery.html">返回资产库</a></div><p>主题设计参考，不代表字节跳动官方规范或背书。合成示例必须替换并复验后才用于科研交付。</p></footer>
+</div></body></html>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" role="img" aria-labelledby="parts-title parts-desc">
+  <title id="parts-title">可编辑图形组件板</title>
+  <desc id="parts-desc">组件样本，不是一个系统。上半区演示容器、节点、端口和有标注的数据边；下半区展示可复制的图例与来源注释。复制时需改写 ID 与引用。</desc>
+  <defs><marker id="parts-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#215ca0"/></marker></defs>
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;font-size:18px;fill:#172b42}.small{font-size:15px;fill:#506279}.heading{font-size:28px;font-weight:700}</style>
+  <rect width="1040" height="600" fill="#fff"/>
+  <text x="40" y="48" class="heading">组合表达，不绑定某一种架构</text>
+  <text x="40" y="80" class="small">原生文字与图形 · 独立样例 · 复制所需元素及 defs / style，并重命名全部 ID</text>
+  <rect id="parts-group" data-viz-node="container" x="40" y="126" width="960" height="240" rx="16" fill="#f5f8fc" stroke="#aabbd0"/>
+  <text data-viz-owner="parts-group" x="64" y="161" class="small">容器：只表达材料支持的归属</text>
+  <rect id="parts-left" data-viz-node="component" data-viz-parent="parts-group" x="80" y="207" width="290" height="106" rx="12" fill="#eaf1fa" stroke="#215ca0"/>
+  <text data-viz-owner="parts-left" x="104" y="250">节点 / 发送端</text>
+  <text data-viz-owner="parts-left" x="104" y="281" class="small">职责说明可编辑</text>
+  <rect id="parts-right" data-viz-node="component" data-viz-parent="parts-group" x="670" y="207" width="290" height="106" rx="12" fill="#fff" stroke="#215ca0"/>
+  <text data-viz-owner="parts-right" x="694" y="250">节点 / 接收端</text>
+  <text data-viz-owner="parts-right" x="694" y="281" class="small">端口表示明确连接点</text>
+  <line data-viz-from="parts-left" data-viz-to="parts-right" data-viz-kind="data" x1="370" y1="260" x2="670" y2="260" stroke="#215ca0" stroke-width="2.5" marker-end="url(#parts-arrow)"/>
+  <circle cx="370" cy="260" r="5" fill="#215ca0"/><circle cx="670" cy="260" r="5" fill="#215ca0"/>
+  <text x="455" y="238" class="small">边：写清载荷或动作</text>
+  <text x="40" y="420">图例模块</text>
+  <line x1="40" y1="456" x2="100" y2="456" stroke="#215ca0" stroke-width="2.5"/>
+  <text x="116" y="462" class="small">数据关系</text>
+  <line x1="280" y1="456" x2="340" y2="456" stroke="#215ca0" stroke-width="2.5" stroke-dasharray="6 5"/>
+  <text x="356" y="462" class="small">参考关系（按图定义）</text>
+  <rect x="610" y="403" width="390" height="88" rx="10" fill="#fff5da"/>
+  <text x="630" y="436" class="small">未知项：明确写出未核实的事实</text>
+  <text x="630" y="465" class="small">不靠虚线本身区分“未知”与“异步”</text>
+  <text x="40" y="545" class="small">来源注释：材料名 / 版本 / 页码或代码位置；当前内容仅为组件演示。</text>
+  <text x="40" y="573" class="small">独立 SVG 内置颜色以便复制；合并页面时再显式同步主题，外部 CSS 不会穿透 img。</text>
+</svg>

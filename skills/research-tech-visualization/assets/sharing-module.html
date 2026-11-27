@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="bytedance">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>自包含分享模块 · 合成示例</title>
+<style>
+:root{--paper:#F5F8FF;--surface:#FFFFFF;--ink:#18243B;--muted:#56657B;--line:#D5DEEC;--accent:#325AB4;--teal:#087E8B;--purple:#6756B8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}main{max-width:940px;margin:auto;padding:28px 20px}h1{font-size:26px;line-height:1.4;margin:0 0 12px}p{margin:0 0 16px}.notice{padding:12px 16px;background:#EAF1FF;border-radius:8px;color:var(--muted);font-size:14px}.controls{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.controls[hidden]{display:none}button{font:inherit;font-size:14px;cursor:pointer;border:1px solid var(--accent);border-radius:5px;background:white;color:var(--accent);padding:8px 14px}button[aria-pressed="true"]{background:var(--accent);color:white}:focus-visible{outline:3px solid var(--teal);outline-offset:3px}.description{font-size:14px;color:var(--muted)}.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:white}svg{display:block;min-width:860px;width:100%;height:auto}svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;font-variant-numeric:tabular-nums;fill:var(--ink)}table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;min-width:300px}th,td{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left}td{text-align:right}thead th{background:#EAF1FF}.table-wrap{overflow-x:auto;margin:20px 0}caption{text-align:left;color:var(--muted);padding-bottom:10px}footer{font-size:13px;color:var(--muted);margin-top:20px}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}@media print{body{background:white}main{max-width:none;padding:0}.controls,button{display:none!important}.scroll{overflow:visible}svg{min-width:0}}
+</style>
+</head>
+<body>
+<main>
+<h1>自包含分享模块 · 一个类别的多方法比较</h1>
+<p class="notice">全部数值为合成演示，不是真实实验。示例展示 HTMLBox 本地准备和独立页面交互，未写入飞书、未发布，也未验证宿主下载能力。</p>
+<div class="controls" role="group" aria-label="选择指标" hidden="hidden">
+<button type="button" data-metric="rp95" aria-pressed="true">R@P95</button>
+<button type="button" data-metric="rp90" aria-pressed="false">R@P90</button>
+</div>
+<p id="description" class="description" aria-live="polite">R@P95 · 0–1 · 越高越好；同一合成任务、同一类别，不添加误差线。</p>
+<div class="scroll" tabindex="0" role="region" aria-label="指标图，可横向滚动">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 286" role="img" data-viz-type="chart" aria-labelledby="chart-title chart-description">
+<title id="chart-title">合成示例 R@P95 方法比较</title>
+<desc id="chart-description">方法 A 为 0.4200，B 为 0.5100，C 为实际测得零的合成示例。R@P90 的 B 为未提供，不作零。</desc>
+<rect x="0" y="0" width="860" height="286" fill="white"></rect>
+<text x="24" y="34" font-size="18" font-weight="600">合成任务 / 合成类别</text>
+<text x="836" y="34" font-size="15" text-anchor="end" id="metric-label">R@P95 · 0–1</text>
+<g stroke="#D5DEEC" stroke-dasharray="3 5"><line x1="180" y1="80" x2="180" y2="234"></line><line x1="480" y1="80" x2="480" y2="234"></line><line x1="780" y1="80" x2="780" y2="234"></line></g>
+<g font-size="14"><text x="180" y="66" text-anchor="middle">0</text><text x="480" y="66" text-anchor="middle">0.5</text><text x="780" y="66" text-anchor="middle">1</text></g>
+<g data-method="方法 A"><text x="24" y="113" font-size="17">方法 A</text><rect x="180" y="98" width="600" height="14" fill="#EAF1FF"></rect><rect class="bar" x="180" y="98" width="252" height="14" fill="#325AB4" data-value="0.42"></rect><text class="value" x="836" y="113" font-size="16" text-anchor="end">0.4200</text></g>
+<g data-method="方法 B"><text x="24" y="167" font-size="17">方法 B</text><rect x="180" y="152" width="600" height="14" fill="#EAF1FF"></rect><rect class="bar" x="180" y="152" width="306" height="14" fill="#087E8B" data-value="0.51"></rect><text class="value" x="836" y="167" font-size="16" text-anchor="end">0.5100</text></g>
+<g data-method="方法 C"><text x="24" y="221" font-size="17">方法 C</text><rect x="180" y="206" width="600" height="14" fill="#EAF1FF"></rect><rect class="bar" x="180" y="206" width="0" height="14" fill="#6756B8" data-value="0"></rect><text class="value" x="836" y="221" font-size="16" text-anchor="end">0.0000</text></g>
+<text x="24" y="266" font-size="14">原值四位小数；0.0000 是零，— 是未提供；独立重复与区间未提供。</text>
+</svg>
+</div>
+<div class="table-wrap">
+<table><caption>全部合成指标 · 不随按钮切换而隐藏</caption><thead><tr><th scope="col">方法</th><th scope="col">R@P95</th><th scope="col">R@P90</th></tr></thead><tbody><tr><th scope="row">方法 A</th><td>0.4200</td><td>0.6000</td></tr><tr><th scope="row">方法 B</th><td>0.5100</td><td>— 未提供</td></tr><tr><th scope="row">方法 C</th><td>0.0000</td><td>0.1500</td></tr></tbody></table>
+</div>
+<button id="download" type="button" hidden="hidden">下载完整合成数据 CSV</button>
+<noscript><p class="description">脚本未启用：保留 R@P95 静态图和全部数据表。</p></noscript>
+<footer>无 CDN、外部字体、本地路径依赖、自动网络请求或认证信息。下载使用用户点击触发的 Blob，飞书宿主是否支持需另验。字节蓝青为设计参考，非官方 VI。</footer>
+</main>
+<script type="application/json" id="demo-data">{"source":"合成演示，不是真实实验","dataset":"合成任务","class":"合成类别","unit":"0–1","methods":[{"name":"方法 A","color":"#325AB4","rp95":0.42,"rp90":0.6},{"name":"方法 B","color":"#087E8B","rp95":0.51,"rp90":null},{"name":"方法 C","color":"#6756B8","rp95":0,"rp90":0.15}]}</script>
+<script>
+(() => {
+  const data = JSON.parse(document.querySelector('#demo-data').textContent);
+  const labels = { rp95: 'R@P95', rp90: 'R@P90' };
+  const controls = document.querySelector('.controls');
+  const download = document.querySelector('#download');
+  controls.hidden = false;
+  download.hidden = false;
+  download.style.display = 'inline-block';
+  controls.addEventListener('click', event => {
+    const button = event.target.closest('button[data-metric]');
+    if (!button || !Object.hasOwn(labels, button.dataset.metric)) return;
+    const metric = button.dataset.metric;
+    for (const candidate of controls.querySelectorAll('button')) candidate.setAttribute('aria-pressed', String(candidate === button));
+    for (const [index, method] of data.methods.entries()) {
+      const group = document.querySelectorAll('g[data-method]')[index];
+      const value = method[metric];
+      const bar = group.querySelector('.bar');
+      bar.setAttribute('width', String(value === null ? 0 : value * 600));
+      bar.style.display = value === null ? 'none' : '';
+      if (value === null) bar.removeAttribute('data-value');
+      else bar.setAttribute('data-value', String(value));
+      group.querySelector('.value').textContent = value === null ? '— 未提供' : value.toFixed(4);
+    }
+    document.querySelector('#metric-label').textContent = `${labels[metric]} · 0–1`;
+    document.querySelector('#chart-title').textContent = `合成示例 ${labels[metric]} 方法比较`;
+    document.querySelector('#chart-description').textContent = data.methods.map(method => `${method.name}：${method[metric] === null ? '未提供' : method[metric].toFixed(4)}`).join('；');
+    document.querySelector('#description').textContent = `${labels[metric]} · 0–1 · 越高越好；同一合成任务、同一类别，不添加误差线。`;
+  });
+  download.addEventListener('click', () => {
+    const rows = ['方法,指标,值_0_1,来源'];
+    for (const method of data.methods) {
+      for (const [metric, label] of Object.entries(labels)) rows.push(`${method.name},${label},${method[metric] === null ? '' : method[metric].toFixed(4)},${data.source}`);
+    }
+    const address = URL.createObjectURL(new Blob(['\uFEFF' + rows.join('\r\n')], { type: 'text/csv;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = address;
+    link.download = '合成示例-完整指标.csv';
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(address), 1000);
+  });
+})();
+</script>
+</body>
+</html>

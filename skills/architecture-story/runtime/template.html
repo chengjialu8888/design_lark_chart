@@ -1,0 +1,68 @@
+<section id="__STORY_ID__" class="story-player" aria-label="架构分步演示">
+  <header><h2 data-title></h2><span class="text-small text-muted" data-notice></span></header>
+  <div class="story-navigation"><div class="story-steps" role="group" aria-label="选择讲解步骤"></div><span class="text-small tabular-nums" data-count></span></div>
+  <div class="story-stage">
+    <div class="story-lanes"></div>
+    <div class="story-diagram" role="img" aria-label="架构图">
+      <svg class="story-wires" aria-hidden="true"></svg>
+      <div class="story-nodes"></div>
+    </div>
+  </div>
+  <div class="story-current" aria-live="polite" aria-atomic="true">
+    <div class="story-current-head"><h3 data-step-title></h3><span class="viz-badge" data-task></span></div>
+    <span data-detail></span>
+    <span class="text-small text-muted" data-payload></span>
+  </div>
+  <div class="story-footer"><div class="viz-controls">
+    <button type="button" class="btn" data-prev aria-label="上一步">←</button>
+    <button type="button" class="btn btn-primary" data-play>播放流程</button>
+    <button type="button" class="btn" data-next aria-label="下一步">→</button>
+  </div><span class="text-small text-muted">← → 切换步骤</span></div>
+  <script type="application/json" data-story>__STORY_DATA__</script>
+</section>
+<style>
+  #__STORY_ID__ {color:var(--foreground);display:grid;gap:10px}
+  #__STORY_ID__ header {display:grid;gap:5px}
+  #__STORY_ID__ header>span:first-child {letter-spacing:.16em}
+  #__STORY_ID__ .story-navigation,#__STORY_ID__ .story-footer,#__STORY_ID__ .story-current-head {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+  #__STORY_ID__ .story-steps {display:flex;flex-wrap:wrap;gap:4px}
+  #__STORY_ID__ .story-stage {padding:14px 12px 54px;background:var(--canvas,var(--muted));border-radius:16px;outline:1px solid var(--border)}
+  #__STORY_ID__ .story-stage:hover>.playback-float {opacity:.85;transform:none}
+  #__STORY_ID__ .story-lanes {display:grid;grid-template-columns:repeat(var(--lanes,3),minmax(0,1fr));gap:32px;padding:0 8px 14px}
+  #__STORY_ID__ .lane-label {display:flex;gap:8px;align-items:center;color:var(--muted-foreground)}
+  #__STORY_ID__ .lane-label::before {content:'';width:14px;height:1px;background:var(--border)}
+  #__STORY_ID__ .story-diagram {position:relative;padding:4px 8px}
+  #__STORY_ID__ .story-nodes {position:relative;display:grid;grid-template-columns:repeat(var(--lanes,3),minmax(0,1fr));gap:40px 32px}
+  #__STORY_ID__ .story-node {min-width:132px;max-width:210px;width:100%;justify-self:center;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:10px;min-height:72px;box-sizing:border-box;transition:opacity .25s}
+  #__STORY_ID__ .node-heading {display:flex;gap:8px;align-items:center;min-width:0}
+  #__STORY_ID__ .node-heading strong {font-weight:400}
+  #__STORY_ID__ .node-code {color:var(--muted-foreground);font-variant-numeric:tabular-nums;width:22px;height:22px;flex-shrink:0;display:grid;place-items:center;background:var(--muted);border-radius:5px}
+  #__STORY_ID__ .node-role {color:var(--muted-foreground)}
+  #__STORY_ID__ .node-status {color:var(--muted-foreground);display:flex;align-items:center;gap:7px}
+  #__STORY_ID__ .node-status::before {content:'';width:5px;height:5px;border-radius:50%;background:var(--border);flex-shrink:0}
+  #__STORY_ID__ .story-node[data-active="true"] .node-status {color:var(--foreground)}
+  #__STORY_ID__ .story-node[data-active="true"] .node-status::before {background:var(--viz-series-1)}
+  #__STORY_ID__ .story-wires {position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+  #__STORY_ID__ .node-shape {fill:var(--background);stroke:var(--border);stroke-width:1;transition:fill .3s;filter:drop-shadow(0 1px 1px #18243b09)}
+  #__STORY_ID__ .node-shape.active {fill:var(--background);stroke:color-mix(in srgb,var(--viz-series-1) 80%,var(--border));stroke-width:1}
+  #__STORY_ID__ .node-accent {fill:var(--viz-series-1)}
+  #__STORY_ID__ .wire {fill:none;stroke:var(--border);stroke-width:1.2}
+  #__STORY_ID__ .wire.active {stroke:var(--viz-series-1);stroke-width:1.8}
+  #__STORY_ID__ .lane-divider {stroke:var(--border);stroke-width:1;opacity:.4}
+  #__STORY_ID__ .packet-halo {fill:var(--viz-series-1);opacity:.12}
+  #__STORY_ID__ .packet-dot {fill:var(--viz-series-1)}
+  #__STORY_ID__ .story-current {display:grid;gap:8px;padding:11px 14px;border-left:2px solid var(--viz-series-1);border-radius:0 10px 10px 0;background:var(--canvas,var(--muted))}
+  #__STORY_ID__ .story-current>[data-detail] {min-height:3em}
+  @media(max-width:560px) {
+    #__STORY_ID__ .story-lanes {display:none}
+    #__STORY_ID__ .story-nodes {grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 24px}
+    #__STORY_ID__ .story-node {grid-column:auto!important;grid-row:auto!important;padding:10px;min-width:0;min-height:72px;overflow-wrap:anywhere}
+    #__STORY_ID__ .node-code {display:none}
+    #__STORY_ID__ .story-footer>span {display:none}
+    #__STORY_ID__ .story-current-head {align-items:flex-start}
+  }
+  @media(prefers-reduced-motion:reduce) {#__STORY_ID__ .story-node,#__STORY_ID__ .node-shape {transition:none}}
+</style>
+<script>
+__STORY_PLAYER__
+</script>

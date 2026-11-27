@@ -1,0 +1,29 @@
+{
+  "name": "architecture-story",
+  "version": "0.15.0",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "architecture-story": "story.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "story.mjs",
+    "styles.mjs",
+    "icons.mjs",
+    "state.mjs",
+    "playback.mjs",
+    "player.js",
+    "template.html",
+    "scene-model.mjs",
+    "scene-visuals.mjs",
+    "scene-contract.mjs",
+    "scene-geometry.mjs",
+    "scene-player.js",
+    "scene-template.html",
+    "module-theme.css",
+    "standalone.css"
+  ]
+}

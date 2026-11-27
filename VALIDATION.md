@@ -19,3 +19,15 @@ Commands and results for the initial public package are recorded after local exe
 - Verified the original supplied prompt is preserved exactly, relative Markdown links resolve, JSON assets parse, and `git diff --check` passes.
 - Reviewed changed public files for private tenant URLs, local user paths, transient login parameters and private document identifiers; none included.
 - No cloud write, new rendered example, font verification or visual round trip was performed for this documentation/preset update. Per-artifact checks remain required when the preset is used.
+
+## Modular extension release — 2026-11-27 / v1.4.0
+
+- Integrated four complete source packages with source versions/fingerprints and per-module provenance; preserved the animation runtime byte for byte. Crayon's host-specific invocation guidance was adapted to available image tools and explicit document targets.
+- Built and unpacked five deterministic archives: main skill plus four standalone modules. All five entrypoints passed skill metadata validation; Python AST, JSON parsing and module-relative links passed from extracted contents.
+- Packaging behavior tests passed: standalone resources are retained, ZIP hashes are reproducible, existing releases are not overwritten, symlinks fail before archive creation.
+- From extracted standalone animation package, styles, visual-language, player and visual tests passed (31 tests); Node CLI offline export passed. Exported expense-approval HTML was byte-identical to the inspected source package export.
+- From extracted research package, experiment JSON, architecture SVG and results-page checks passed. Existing local Playwright/Chrome rendered the results page; no structural/runtime errors or horizontal overflow were reported at 1440px. This is a sample check, not certification of every asset or every input.
+- Extracted crayon downloader detected the sample JPEG's actual format/dimensions and generated a review thumbnail. This tested local file handling, not an external image provider or generation quality.
+- Reviewed source swimlane and crayon references and generated previews; the shipped examples are illustrative. Real Feishu writes, embeds, hosted deployments and new image generation were not performed for this package release.
+- Public-content scan found no private tenant document URLs, machine user paths, transient login parameters or key blocks in added text/code files. Original private source document and registry authentication are not bundled.
+- Offline animation was additionally exercised in real Chrome at fresh 736px and 320px viewports: explicit start under reduced motion, next/previous, nonadjacent jumps and replay. Dark OS preference retained a white canvas; no runtime errors or horizontal document overflow were observed. This does not cover every intermediate frame or all browsers.

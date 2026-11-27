@@ -1,8 +1,8 @@
 ---
 name: design-lark-chart
-description: Create editable Feishu/Lark flowcharts, organization diagrams, timelines, workload views and consulting report visuals from supplied evidence; includes semantic colours, structured writing, SVG compatibility and publish/verify guidance. Use when asked to draw or refine diagrams in Feishu documents.
+description: Create editable Feishu/Lark flowcharts, organization diagrams, timelines, workload views and consulting report visuals from supplied evidence; includes semantic colours, structured writing, SVG compatibility and publish/verify guidance. Includes optional scientific visualization, system/data-lineage swimlanes, offline architecture animations and crayon illustration modules. Use when drawing or refining technical/report visuals and choosing the appropriate delivery format.
 metadata:
-  version: "1.3.1"
+  version: "1.4.0"
 ---
 
 # Design Lark Chart
@@ -15,6 +15,17 @@ metadata:
 2. 使用用户已提供的目标、读者、风格和材料；缺少且影响输出时再澄清。链接不可访问时登记缺口，不能编造内部流程。
 3. 先确定问题、角色、输入、产出、交接、依赖、时间与异常分支，再选择图型。框架、层数、节点数均由内容决定，不套固定业务模板。
 4. 默认按 [结构化报告视觉](references/report-visuals.md)组织文案；重点流程／个人时间用语义彩色，辅助关系图采用简洁矩阵／分层卡片。
+
+## 新增独立模块：按任务加载
+
+四类扩展的完整文件位于 `skills/`，选择与当前问题有关的一项，不把所有模块一次性加载。先读 [扩展路由与交付边界](references/extensions.md)，再读选中模块的 `SKILL.md`：
+
+- 论文／源码／实验图与科研页面 → `skills/research-tech-visualization/`。
+- 系统泳道、数据库字段与数据血缘 → `skills/system-swimlane-diagram/`。
+- 可暂停、逐步播放的架构／流程 → `skills/architecture-story/`，自带离线 Node CLI，输出 HTML。
+- 用户明确要求手绘／蜡笔技术图 → `skills/crayon-tech-diagram/`，实际生图需要可用图像服务，输出位图。
+
+若目标是飞书原生画板，继续走本入口的 SVG／代码图链路；HTML 和位图使用匹配的分享或插图方式，不宣称原生节点可编辑。各模块也提供独立 ZIP，可不安装主包使用。
 
 ## 内容框架与视觉模板分层
 

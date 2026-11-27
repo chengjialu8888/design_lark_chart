@@ -1,0 +1,37 @@
+{
+  "release": "1.4.0",
+  "modules": [
+    {
+      "name": "research-tech-visualization",
+      "upstream_version": "0.3.0",
+      "path": "skills/research-tech-visualization",
+      "source": "User-selected AgentBuddy catalog package",
+      "upstream_content_sha256": "62998e4b4e10f5eb14394ff781def57f2d06e8bcb439ecbf8af9b23cd08151ca",
+      "integration_release": "1.4.0"
+    },
+    {
+      "name": "system-swimlane-diagram",
+      "upstream_version": "1.0.0",
+      "path": "skills/system-swimlane-diagram",
+      "source": "User-selected AgentBuddy catalog package",
+      "upstream_content_sha256": "a02a4aee95e12e1fa4abcda1f288c21b95bce4cb65c065c3b931d0fe9680c753",
+      "integration_release": "1.4.0"
+    },
+    {
+      "name": "architecture-story",
+      "upstream_version": "0.15.0",
+      "path": "skills/architecture-story",
+      "source": "User-selected AgentBuddy catalog package",
+      "upstream_content_sha256": "8a71b1fe80d9b7debc9c965fffc95ede88f1a56604a7056725c1c527f0c15d70",
+      "integration_release": "1.4.0"
+    },
+    {
+      "name": "crayon-tech-diagram",
+      "upstream_version": "1.0.0",
+      "path": "skills/crayon-tech-diagram",
+      "source": "User-selected AgentBuddy catalog package",
+      "upstream_content_sha256": "d9f58bde6ba804418d28e09e999de0d5f5ff9b253d8dfd1cd8dea4054103b851",
+      "integration_release": "1.4.0"
+    }
+  ]
+}

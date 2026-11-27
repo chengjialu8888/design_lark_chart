@@ -1,0 +1,705 @@
+{
+  "version": 2,
+  "id": "expense-approval",
+  "title": "一笔报销，怎样走到入账",
+  "notice": "业务机制示例 · 非任何公司的实际审批制度",
+  "playback": {
+    "mode": "presentation",
+    "end": "loop",
+    "selector": true
+  },
+  "actors": [
+    {
+      "id": "employee",
+      "label": "员工",
+      "kind": "message"
+    },
+    {
+      "id": "request",
+      "label": "报销单",
+      "kind": "group"
+    },
+    {
+      "id": "manager",
+      "label": "负责人",
+      "kind": "service"
+    },
+    {
+      "id": "finance",
+      "label": "财务",
+      "kind": "service"
+    },
+    {
+      "id": "receipt",
+      "label": "入账回执",
+      "kind": "message"
+    }
+  ],
+  "relations": [
+    {
+      "id": "submit",
+      "from": "employee",
+      "to": "request",
+      "kind": "message",
+      "label": "提交",
+      "requires": [
+        "submitted"
+      ],
+      "produces": [
+        "received"
+      ]
+    },
+    {
+      "id": "review",
+      "from": "request",
+      "to": "manager",
+      "kind": "dependency",
+      "label": "待审批"
+    },
+    {
+      "id": "approve",
+      "from": "manager",
+      "to": "finance",
+      "kind": "message",
+      "label": "审批通过",
+      "requires": [
+        "approved"
+      ],
+      "produces": [
+        "finance-ready"
+      ]
+    },
+    {
+      "id": "archive",
+      "from": "finance",
+      "to": "receipt",
+      "kind": "return",
+      "label": "入账成功",
+      "requires": [
+        "booked"
+      ],
+      "produces": [
+        "notified"
+      ]
+    }
+  ],
+  "contract": {
+    "sources": [
+      {
+        "id": "source",
+        "reference": "Illustrative assumption authored for this example; not a production policy.",
+        "scope": "只有负责人明确批准后，财务才可入账；本示例不包含驳回或付款。"
+      }
+    ],
+    "facts": [
+      {
+        "id": "submitted",
+        "description": "员工提交报销单",
+        "origin": "external",
+        "after": [],
+        "source": "source"
+      },
+      {
+        "id": "received",
+        "description": "系统收到报销单",
+        "origin": "flow",
+        "after": [
+          "submitted"
+        ],
+        "source": "source"
+      },
+      {
+        "id": "approved",
+        "description": "负责人明确批准",
+        "origin": "external",
+        "after": [
+          "received"
+        ],
+        "source": "source"
+      },
+      {
+        "id": "finance-ready",
+        "description": "财务收到批准结果",
+        "origin": "flow",
+        "after": [
+          "approved"
+        ],
+        "source": "source"
+      },
+      {
+        "id": "booked",
+        "description": "财务完成入账",
+        "origin": "external",
+        "after": [
+          "finance-ready"
+        ],
+        "source": "source"
+      },
+      {
+        "id": "notified",
+        "description": "员工收到入账回执",
+        "origin": "flow",
+        "after": [
+          "booked"
+        ],
+        "source": "source"
+      }
+    ],
+    "rules": [
+      {
+        "id": "review-after-receive",
+        "type": "requires",
+        "actor": "manager",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "received"
+        ]
+      },
+      {
+        "id": "book-after-approval",
+        "type": "requires",
+        "actor": "finance",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "approved",
+          "finance-ready"
+        ]
+      },
+      {
+        "id": "receipt-after-booking",
+        "type": "requires",
+        "actor": "receipt",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "notified"
+        ]
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "label": "提交",
+      "detail": "01 / 请求先到达，处理才开始",
+      "duration": 4200,
+      "height": 370,
+      "narrowHeight": 430,
+      "frames": [
+        {
+          "at": 0,
+          "caption": "员工提交报销单。先看消息到达，再看审批展开。",
+          "items": {
+            "employee": {
+              "wide": [
+                0.03,
+                126,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.07,
+                18,
+                0.86,
+                88
+              ],
+              "lines": [
+                "提交差旅报销"
+              ],
+              "state": "normal"
+            },
+            "request": {
+              "wide": [
+                0.43,
+                102,
+                0.44,
+                140
+              ],
+              "narrow": [
+                0.12,
+                225,
+                0.76,
+                140
+              ],
+              "lines": [
+                "差旅 · ¥ 1,280",
+                "凭证已附齐"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "submit",
+              "state": "flow",
+              "travel": 1200
+            }
+          ],
+          "facts": [
+            "submitted"
+          ]
+        },
+        {
+          "at": 1400,
+          "caption": "报销单已收到，保留同一对象，展开它的审批环节。",
+          "items": {
+            "employee": {
+              "wide": [
+                0.03,
+                126,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.07,
+                18,
+                0.86,
+                88
+              ],
+              "lines": [
+                "提交差旅报销"
+              ],
+              "state": "normal"
+            },
+            "request": {
+              "wide": [
+                0.33,
+                24,
+                0.64,
+                310
+              ],
+              "narrow": [
+                0.04,
+                144,
+                0.92,
+                250
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "manager"
+              ],
+              "label": "报销单 · 审批中"
+            },
+            "manager": {
+              "wide": [
+                0.49,
+                130,
+                0.32,
+                100
+              ],
+              "narrow": [
+                0.17,
+                228,
+                0.66,
+                110
+              ],
+              "lines": [
+                "核对金额与凭证"
+              ],
+              "state": "active"
+            }
+          },
+          "links": [
+            {
+              "relation": "submit",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "submitted",
+            "received"
+          ]
+        },
+        {
+          "at": 2900,
+          "caption": "审批尚未发生；等待是一种状态，不是一次成功。",
+          "items": {
+            "employee": {
+              "wide": [
+                0.03,
+                126,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.07,
+                18,
+                0.86,
+                88
+              ],
+              "lines": [
+                "提交差旅报销"
+              ],
+              "state": "normal"
+            },
+            "request": {
+              "wide": [
+                0.33,
+                24,
+                0.64,
+                310
+              ],
+              "narrow": [
+                0.04,
+                144,
+                0.92,
+                250
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "manager"
+              ],
+              "label": "报销单 · 审批中"
+            },
+            "manager": {
+              "wide": [
+                0.49,
+                130,
+                0.32,
+                100
+              ],
+              "narrow": [
+                0.17,
+                228,
+                0.66,
+                110
+              ],
+              "lines": [
+                "等待明确决定"
+              ],
+              "state": "waiting"
+            }
+          },
+          "links": [
+            {
+              "relation": "submit",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "submitted",
+            "received"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "审批",
+      "detail": "02 / 明确批准，才交给财务",
+      "duration": 5400,
+      "height": 370,
+      "narrowHeight": 450,
+      "frames": [
+        {
+          "at": 0,
+          "caption": "收起单据细节，把注意力移到决策与交接。",
+          "items": {
+            "request": {
+              "wide": [
+                0.03,
+                125,
+                0.23,
+                100
+              ],
+              "narrow": [
+                0.1,
+                15,
+                0.8,
+                80
+              ],
+              "lines": [
+                "等待负责人"
+              ],
+              "state": "normal"
+            },
+            "manager": {
+              "wide": [
+                0.37,
+                125,
+                0.23,
+                100
+              ],
+              "narrow": [
+                0.14,
+                175,
+                0.72,
+                100
+              ],
+              "lines": [
+                "尚未批准"
+              ],
+              "state": "waiting"
+            },
+            "finance": {
+              "wide": [
+                0.65,
+                125,
+                0.3,
+                100
+              ],
+              "narrow": [
+                0.14,
+                310,
+                0.72,
+                100
+              ],
+              "lines": [
+                "批准后才可入账"
+              ],
+              "state": "muted"
+            }
+          },
+          "links": [
+            {
+              "relation": "review",
+              "state": "waiting"
+            }
+          ],
+          "facts": [
+            "submitted",
+            "received"
+          ]
+        },
+        {
+          "at": 1600,
+          "caption": "负责人批准。此时财务还未收到，不能提前开始处理。",
+          "items": {
+            "manager": {
+              "wide": [
+                0.08,
+                125,
+                0.32,
+                100
+              ],
+              "narrow": [
+                0.14,
+                130,
+                0.72,
+                100
+              ],
+              "lines": [
+                "已明确批准"
+              ],
+              "state": "done"
+            },
+            "finance": {
+              "wide": [
+                0.65,
+                125,
+                0.3,
+                100
+              ],
+              "narrow": [
+                0.14,
+                310,
+                0.72,
+                100
+              ],
+              "lines": [
+                "批准后才可入账"
+              ],
+              "state": "muted"
+            }
+          },
+          "links": [
+            {
+              "relation": "approve",
+              "state": "flow",
+              "travel": 1200
+            }
+          ],
+          "facts": [
+            "submitted",
+            "received",
+            "approved"
+          ]
+        },
+        {
+          "at": 3000,
+          "caption": "批准结果送达财务，入账工作才开始。",
+          "items": {
+            "manager": {
+              "wide": [
+                0.08,
+                125,
+                0.32,
+                100
+              ],
+              "narrow": [
+                0.14,
+                130,
+                0.72,
+                100
+              ],
+              "lines": [
+                "已明确批准"
+              ],
+              "state": "done"
+            },
+            "finance": {
+              "wide": [
+                0.65,
+                125,
+                0.3,
+                100
+              ],
+              "narrow": [
+                0.14,
+                310,
+                0.72,
+                100
+              ],
+              "lines": [
+                "批准后才可入账"
+              ],
+              "state": "active"
+            }
+          },
+          "links": [
+            {
+              "relation": "approve",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "submitted",
+            "received",
+            "approved",
+            "finance-ready"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "回执",
+      "detail": "03 / 完成入账，并返回结果",
+      "duration": 4400,
+      "height": 370,
+      "narrowHeight": 490,
+      "frames": [
+        {
+          "at": 0,
+          "caption": "财务完成入账，发送回执；入账不等于已经付款。",
+          "items": {
+            "finance": {
+              "wide": [
+                0.08,
+                125,
+                0.32,
+                100
+              ],
+              "narrow": [
+                0.14,
+                80,
+                0.72,
+                100
+              ],
+              "lines": [
+                "已入账"
+              ],
+              "state": "done"
+            },
+            "receipt": {
+              "wide": [
+                0.65,
+                125,
+                0.3,
+                100
+              ],
+              "narrow": [
+                0.14,
+                320,
+                0.72,
+                110
+              ],
+              "lines": [
+                "等待回执"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "archive",
+              "state": "flow",
+              "travel": 1200
+            }
+          ],
+          "facts": [
+            "submitted",
+            "received",
+            "approved",
+            "finance-ready",
+            "booked"
+          ]
+        },
+        {
+          "at": 1500,
+          "caption": "员工收到回执，这段演示闭环。拒绝、撤回和付款是其他流程。",
+          "items": {
+            "finance": {
+              "wide": [
+                0.08,
+                125,
+                0.32,
+                100
+              ],
+              "narrow": [
+                0.14,
+                80,
+                0.72,
+                100
+              ],
+              "lines": [
+                "已入账"
+              ],
+              "state": "done"
+            },
+            "receipt": {
+              "wide": [
+                0.65,
+                125,
+                0.3,
+                100
+              ],
+              "narrow": [
+                0.14,
+                320,
+                0.72,
+                110
+              ],
+              "lines": [
+                "入账成功",
+                "可继续查询记录"
+              ],
+              "state": "done"
+            }
+          },
+          "links": [
+            {
+              "relation": "archive",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "submitted",
+            "received",
+            "approved",
+            "finance-ready",
+            "booked",
+            "notified"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+[data-motion-controls][hidden] { display: none; }
+[data-motion-controls] { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-block: 20px; }
+[data-motion-controls] button, [data-motion-controls] select { min-height: 44px; padding: 8px 14px; font: inherit; border: 1px solid var(--line); color: var(--ink); background: var(--surface); border-radius: 8px; }
+[data-motion-controls] button { cursor: pointer; }
+[data-motion-controls] button:disabled { cursor: default; opacity: .55; }
+[data-motion-root] svg { display: block; width: 100%; min-width: 960px; }
+[data-motion-root] [data-motion-stage] { stroke-width: 1.5; }
+[data-motion-root] [data-motion-stage].current-stage { stroke-width: 4; }
+[data-motion-root] [data-motion-decoration] { pointer-events: none; }
+[data-motion-root] .motion-status { font-size: 14px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) {
+  [data-motion-controls], [data-motion-decoration] { display: none !important; }
+  [data-motion-root] [data-motion-stage] { stroke-width: 1.5 !important; }
+}
+@media print {
+  [data-motion-controls], [data-motion-decoration] { display: none !important; }
+  [data-motion-root] svg { min-width: 0; }
+  [data-motion-root] [data-motion-stage] { stroke-width: 1.5 !important; }
+}

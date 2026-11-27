@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" role="img" aria-labelledby="seq-title seq-desc">
+  <title id="seq-title">请求时序骨架</title><desc id="seq-desc">合成示例：调用方请求服务，服务读取存储，存储返回结果，服务响应调用方。时间从上到下，仅表达顺序，不按耗时比例绘制。</desc>
+  <defs><marker id="seq-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#215ca0"/></marker></defs>
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;fill:#172b42;font-size:18px}.small{font-size:15px;fill:#506279}.heading{font-size:28px;font-weight:700}.edge{stroke:#215ca0;stroke-width:2;marker-end:url(#seq-arrow)}.lifeline{stroke:#aabbd0;stroke-width:1.5;stroke-dasharray:5 5}</style>
+  <rect width="1040" height="600" fill="#fff"/><text x="40" y="48" class="heading">用时间顺序解释跨主体交互</text><text x="40" y="82" class="small">合成示例 · 实线调用、虚线返回 · 不是按耗时比例绘制的 trace</text>
+  <rect id="seq-caller" data-viz-node="component" x="65" y="126" width="210" height="70" rx="8" fill="#eaf1fa" stroke="#215ca0"/><text data-viz-owner="seq-caller" x="170" y="168" text-anchor="middle">调用方</text>
+  <rect id="seq-service" data-viz-node="component" x="415" y="126" width="210" height="70" rx="8" fill="#edf6f3" stroke="#147568"/><text data-viz-owner="seq-service" x="520" y="168" text-anchor="middle">服务</text>
+  <rect id="seq-storage" data-viz-node="component" x="765" y="126" width="210" height="70" rx="8" fill="#f4f7fa" stroke="#7b8797"/><text data-viz-owner="seq-storage" x="870" y="168" text-anchor="middle">存储</text>
+  <line class="lifeline" x1="170" y1="196" x2="170" y2="520"/><line class="lifeline" x1="520" y1="196" x2="520" y2="520"/><line class="lifeline" x1="870" y1="196" x2="870" y2="520"/>
+  <rect id="seq-active-caller" data-viz-node="component" x="164" y="240" width="12" height="220" fill="#eaf1fa" stroke="#215ca0"/>
+  <rect id="seq-active-service" data-viz-node="component" x="514" y="240" width="12" height="220" fill="#eaf1fa" stroke="#215ca0"/>
+  <rect id="seq-active-storage" data-viz-node="component" x="864" y="310" width="12" height="80" fill="#eaf1fa" stroke="#215ca0"/>
+  <line class="edge" data-viz-from="seq-active-caller" data-viz-to="seq-active-service" data-viz-kind="request" x1="176" y1="250" x2="514" y2="250"/><text x="300" y="231">1 请求</text>
+  <line class="edge" data-viz-from="seq-active-service" data-viz-to="seq-active-storage" data-viz-kind="read" x1="526" y1="320" x2="864" y2="320"/><text x="650" y="301">2 读取</text>
+  <line class="edge" data-viz-from="seq-active-storage" data-viz-to="seq-active-service" data-viz-kind="return" x1="864" y1="380" x2="526" y2="380" stroke-dasharray="6 5"/><text x="650" y="361">3 返回</text>
+  <line class="edge" data-viz-from="seq-active-service" data-viz-to="seq-active-caller" data-viz-kind="response" x1="514" y1="450" x2="176" y2="450" stroke-dasharray="6 5"/><text x="300" y="431">4 响应</text>
+  <text x="40" y="568" class="small">来源：时序骨架演示；缺少并发、超时、异步与分支事实时不自行加入。</text>
+</svg>

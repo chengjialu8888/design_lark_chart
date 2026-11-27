@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "default_theme": "bytedance",
+  "note": "主题名用于选型，不代表品牌官方 VI 或背书。series 是离散色候选，不直接用作小字号文字；顺序色仅编码有序数值。",
+  "themes": {
+    "bytedance": {
+      "label": "字节蓝青", "use": "蓝青配色的科研技术页、架构图与实验报告；设计参考，非官方品牌 VI",
+      "css": {"paper":"#F5F8FF","surface":"#FFFFFF","ink":"#18243B","muted":"#56657B","line":"#D5DEEC","accent":"#325AB4","accent-soft":"#EAF1FF","link":"#274B96","highlight":"#00B5C9","highlight-soft":"#78E6DC","graphic-secondary":"#087E8B"},
+      "series": ["#325AB4","#087E8B","#6756B8","#A86118","#64748B","#A64D79"],
+      "sequential": ["#EDF3FF","#C6D8F6","#95B5E8","#678ED3","#325AB4","#173870"],
+      "roles": {"primary":"#325AB4","secondary":"#087E8B","highlight":"#00B5C9","highlight_soft":"#78E6DC","label_bg":"#325AB4","label_ink":"#FFFFFF"}
+    },
+    "grafana": {
+      "label": "Grafana Dashboard Light", "use": "实验探索、多面板与日常技术报告",
+      "css": {"paper":"#f4f5f5","surface":"#ffffff","ink":"#172b42","muted":"#506279","line":"#cbd5e1","accent":"#4E7CA1","accent-soft":"#edf2f6","link":"#315776"},
+      "series": ["#4E7CA1","#6BA07A","#D4915A","#8B7EB8","#C47C7C","#5A9EAD","#B5954E","#7AAFCB","#A0B571","#CC8E74"],
+      "sequential": [], "roles": {}
+    },
+    "default_blue": {
+      "label": "默认蓝", "use": "技术说明、实验比较与通用科研报告",
+      "css": {"paper":"#ffffff","surface":"#ffffff","ink":"#2C3E50","muted":"#506279","line":"#BDC3C7","accent":"#1B4F72","accent-soft":"#E7EFF5","link":"#1B4F72"},
+      "series": ["#1B4F72","#2C3E50","#FF6B35","#E74C3C","#5D6D7E","#85929E","#BDC3C7","#AED6F1"],
+      "sequential": ["#E7EFF5","#B5CFE0","#79AECB","#438DB6","#1B4F72","#0E2839"],
+      "roles": {"primary":"#1B4F72","secondary":"#2C3E50","accent":"#FF6B35","alert":"#E74C3C","light_bg":"#AED6F1","grid":"#BDC3C7","base":"#BDC3C7"}
+    },
+    "mckinsey": {
+      "label": "麦肯锡蓝", "use": "简洁汇报、论文结果概览与正式演示",
+      "css": {"paper":"#ffffff","surface":"#ffffff","ink":"#051C2C","muted":"#506279","line":"#BDC3C7","accent":"#24477F","accent-soft":"#E8EEF5","link":"#24477F"},
+      "series": ["#24477F","#051C2C","#C9A136","#CB2026","#5D6D7E","#85929E","#BDC3C7","#A8C4E0"],
+      "sequential": ["#E8EEF5","#B8CCDF","#7DA5C9","#4A7FB3","#24477F","#142740"],
+      "roles": {"primary":"#24477F","secondary":"#051C2C","accent":"#C9A136","alert":"#CB2026","light_bg":"#A8C4E0","grid":"#BDC3C7","base":"#BDC3C7"}
+    },
+    "bcg": {
+      "label": "波士顿绿", "use": "绿色调报告；颜色本身不代表结果有利",
+      "css": {"paper":"#ffffff","surface":"#ffffff","ink":"#0E3E1B","muted":"#506279","line":"#BDC3C7","accent":"#147B58","accent-soft":"#E6F3ED","link":"#126b4d"},
+      "series": ["#147B58","#0E3E1B","#E8853D","#E74C3C","#5D6D7E","#85929E","#BDC3C7","#B8E6CC"],
+      "sequential": ["#E6F3ED","#B3DFC9","#73C9A2","#3DB37B","#147B58","#0A3D2C"],
+      "roles": {"primary":"#147B58","secondary":"#0E3E1B","accent":"#E8853D","alert":"#E74C3C","light_bg":"#B8E6CC","grid":"#BDC3C7","base":"#BDC3C7"}
+    },
+    "bain": {
+      "label": "贝恩红", "use": "红色重点、成本或效率专题；不自动意味着异常",
+      "css": {"paper":"#ffffff","surface":"#ffffff","ink":"#34495E","muted":"#506279","line":"#BDC3C7","accent":"#CB2026","accent-soft":"#F8E6E6","link":"#9E1B1E"},
+      "series": ["#CB2026","#9E1B1E","#34495E","#1B4F72","#5D6D7E","#85929E","#BDC3C7","#F5CECE"],
+      "sequential": ["#F8E6E6","#EDBABB","#DE7E80","#CF4347","#CB2026","#6B1013"],
+      "roles": {"primary":"#CB2026","secondary":"#9E1B1E","accent":"#34495E","alert":"#1B4F72","light_bg":"#F5CECE","grid":"#BDC3C7","base":"#BDC3C7"}
+    },
+    "white": {
+      "label": "纯白背景", "use": "论文、文档与幻灯片；保留 Grafana 离散色",
+      "css": {"paper":"#ffffff","surface":"#ffffff","ink":"#172b42","muted":"#506279","line":"#cbd5e1","accent":"#4E7CA1","accent-soft":"#edf2f6","link":"#315776"},
+      "series": ["#4E7CA1","#6BA07A","#D4915A","#8B7EB8","#C47C7C","#5A9EAD","#B5954E","#7AAFCB","#A0B571","#CC8E74"],
+      "sequential": [], "roles": {}
+    },
+    "science-light": {
+      "label": "科研蓝白橙 · 浅色", "use": "学术项目页、方法介绍与科普长页",
+      "css": {"paper":"#f3f4f2","surface":"#ffffff","ink":"#124f9d","muted":"#505b68","line":"#c8cdd2","accent":"#ff650e","accent-soft":"#e5eaf0","link":"#124f9d"},
+      "series": ["#124f9d","#ff650e","#147568","#7850a0"], "sequential": [],
+      "roles": {"label_bg":"#1455a9","label_ink":"#ffffff","accent_2":"#1a62bc","accent_3":"#092d8a"}
+    },
+    "science-dark": {
+      "label": "科研蓝白橙 · 深色", "use": "需要深蓝主视觉的展示章节；正文与图面重新配套",
+      "css": {"paper":"#09278f","surface":"#081b67","ink":"#ffffff","muted":"#e0ecff","line":"#86add8","accent":"#ff650e","accent-soft":"#12377d","link":"#d8eafa"},
+      "series": ["#60a0e1","#ff650e","#78E6DC","#e0c5ff"], "sequential": [],
+      "roles": {"label_bg":"#f5f7fa","label_ink":"#124f9d","accent_2":"#60a0e1","accent_3":"#d8eafa"}
+    },
+    "warm-paper": {
+      "label": "暖纸棕", "use": "编辑式研究说明与长文阅读，不自动增加纸纹",
+      "css": {"paper":"#f1e6cc","surface":"#fffaf0","ink":"#53432e","muted":"#68573f","line":"#c6b79c","accent":"#dd9671","accent-soft":"#eadabe","link":"#745036"},
+      "series": ["#806044","#dd9671","#59734d","#4E7CA1"], "sequential": [],
+      "roles": {"label_bg":"#806044","label_ink":"#ffffff"}
+    },
+    "clinical-cyan": {
+      "label": "净白青蓝", "use": "清晰的技术说明、医学科普与参数面板",
+      "css": {"paper":"#f7f8f6","surface":"#ffffff","ink":"#171a1a","muted":"#596365","line":"#c7d8d7","accent":"#087f89","accent-soft":"#e9f1ee","link":"#076e77"},
+      "series": ["#087f89","#4E7CA1","#a85c30","#7850a0"], "sequential": [],
+      "roles": {"label_bg":"#087f89","label_ink":"#fffaf0"}
+    },
+    "silver-cyan": {
+      "label": "冷银墨黑青蓝", "use": "工程展示和技术封面；亮青只作小面积强调",
+      "css": {"paper":"#e3e9e8","surface":"#f4f8f8","ink":"#050707","muted":"#485158","line":"#899b9e","accent":"#24afd2","accent-soft":"#bdc8c8","link":"#125366"},
+      "series": ["#24afd2","#485158","#8a7040","#7850a0"], "sequential": [],
+      "roles": {"silver":"#bdc8c8","silver_light":"#e3e9e8","silver_deep":"#899b9e","paper":"#ffffff"}
+    }
+  }
+}

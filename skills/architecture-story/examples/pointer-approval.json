@@ -1,0 +1,35 @@
+{
+  "version": 2, "id": "pointer-approval", "title": "申请到达后，审核才开始",
+  "notice": "业务流程示意，不代表真实审批记录。",
+  "presentation": {"navigation": "questions", "motion": "pointer"},
+  "playback": {"mode": "interactive", "autoplay": true},
+  "actors": [
+    {"id": "request", "label": "申请", "kind": "message"},
+    {"id": "review", "label": "审核", "kind": "service"}
+  ],
+  "relations": [
+    {"id": "submit", "from": "request", "to": "review", "kind": "message", "label": "提交", "requires": ["ready"], "produces": ["received"], "style": {"pattern": "dashed", "tone": "accent", "arrow": true}}
+  ],
+  "contract": {
+    "sources": [{"id": "assumption", "reference": "Explicit illustrative assumption", "scope": "An application must arrive before review begins"}],
+    "facts": [
+      {"id": "ready", "description": "申请可提交", "source": "assumption", "origin": "external", "after": []},
+      {"id": "received", "description": "审核收到申请", "source": "assumption", "origin": "flow", "after": ["ready"]}
+    ],
+    "rules": [{"id": "arrival-first", "type": "requires", "actor": "review", "states": ["active"], "facts": ["received"]}]
+  },
+  "scenes": [{
+    "label": "什么时候开始审核？", "detail": "先送达，再处理", "layout": "stable", "anchors": ["request", "review"],
+    "height": 260, "narrowHeight": 330, "duration": 6000,
+    "frames": [
+      {"at": 0, "caption": "圆点表示一次提交，送达后才开始审核。", "focus": ["request", "review"], "processing": [], "facts": ["ready"],
+       "items": {"request": {"wide": [0.1,70,0.3,80], "narrow": [0.18,14,0.64,70], "lines": ["待提交"]}, "review": {"wide": [0.6,70,0.3,80], "narrow": [0.18,164,0.64,80], "lines": ["等待申请"]}}, "links": []},
+      {"at": 400, "caption": "圆点表示一次提交，送达后才开始审核。", "focus": ["request", "review"], "processing": [], "facts": ["ready"],
+       "items": {"request": {"wide": [0.1,70,0.3,80], "narrow": [0.18,14,0.64,70], "lines": ["提交中"]}, "review": {"wide": [0.6,70,0.3,80], "narrow": [0.18,164,0.64,80], "lines": ["等待申请"]}}, "links": [{"relation": "submit", "state": "flow", "travel": 700}]},
+      {"at": 1400, "caption": "圆点表示一次提交，送达后才开始审核。", "focus": ["review"], "processing": ["review"], "facts": ["ready", "received"],
+       "items": {"request": {"wide": [0.1,70,0.3,80], "narrow": [0.18,14,0.64,70], "lines": ["已提交"]}, "review": {"wide": [0.6,70,0.3,80], "narrow": [0.18,164,0.64,80], "lines": ["正在审核"], "state": "active"}}, "links": [{"relation": "submit", "state": "idle"}]},
+      {"at": 3000, "caption": "只有审核节点呼吸，已提交的申请退到背景。", "focus": ["review"], "processing": ["review"], "facts": ["ready", "received"],
+       "items": {"request": {"wide": [0.1,70,0.3,80], "narrow": [0.18,14,0.64,70], "lines": ["已提交"]}, "review": {"wide": [0.6,70,0.3,80], "narrow": [0.18,164,0.64,80], "lines": ["正在审核"], "state": "active"}}, "links": [{"relation": "submit", "state": "idle"}]}
+    ]
+  }]
+}

@@ -1,0 +1,13 @@
+{
+  "theme": "bytedance",
+  "config": "配置 1",
+  "datasets": ["数据集 X", "数据集 Y"],
+  "focus_dataset": "数据集 X",
+  "primary_metric": "accuracy",
+  "cost_metric": "latency",
+  "methods": ["方法 A", "方法 B", "方法 C"],
+  "method_colors": {"方法 A":"#2563a6", "方法 B":"#a24719", "方法 C":"#147568"},
+  "domains": {"accuracy":[0,100], "latency":[0,40]},
+  "labels": {"left":170, "right":330},
+  "precision": 1
+}

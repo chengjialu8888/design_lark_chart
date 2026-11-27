@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "title": "同一配置下的质量与成本",
+  "notice": "合成演示数据，不是真实研究结果；不据此判断任何方法优劣。",
+  "metrics": {
+    "accuracy": {"label":"准确率", "unit":"%", "direction":"higher", "minimum":0, "maximum":100},
+    "latency": {"label":"延迟", "unit":"ms", "direction":"lower", "minimum":0}
+  },
+  "comparison_keys": ["dataset","config","metric","statistic"],
+  "condition_keys": ["config"],
+  "records": [
+    {"method":"方法 A","dataset":"数据集 X","config":"配置 1","metric":"accuracy","unit":"%","statistic":"mean","status":"ok","value":78,"n":5,"sample_unit":"独立运行（合成）","uncertainty":{"kind":"SD","low":77,"high":79},"source":"合成演示/X/A/accuracy"},
+    {"method":"方法 B","dataset":"数据集 X","config":"配置 1","metric":"accuracy","unit":"%","statistic":"mean","status":"ok","value":82,"n":5,"sample_unit":"独立运行（合成）","uncertainty":{"kind":"SD","low":80.8,"high":83.2},"source":"合成演示/X/B/accuracy"},
+    {"method":"方法 C","dataset":"数据集 X","config":"配置 1","metric":"accuracy","unit":"%","statistic":"mean","status":"ok","value":84,"n":5,"sample_unit":"独立运行（合成）","uncertainty":{"kind":"SD","low":83.2,"high":84.8},"source":"合成演示/X/C/accuracy"},
+    {"method":"方法 A","dataset":"数据集 Y","config":"配置 1","metric":"accuracy","unit":"%","statistic":"mean","status":"ok","value":70,"n":5,"sample_unit":"独立运行（合成）","uncertainty":{"kind":"SD","low":68.5,"high":71.5},"source":"合成演示/Y/A/accuracy"},
+    {"method":"方法 B","dataset":"数据集 Y","config":"配置 1","metric":"accuracy","unit":"%","statistic":"mean","status":"ok","value":74,"source":"合成演示/Y/B/accuracy，仅均值"},
+    {"method":"方法 C","dataset":"数据集 Y","config":"配置 1","metric":"accuracy","unit":"%","statistic":"mean","status":"ok","value":77,"n":5,"sample_unit":"独立运行（合成）","uncertainty":{"kind":"SD","low":76,"high":78},"source":"合成演示/Y/C/accuracy"},
+    {"method":"方法 A","dataset":"数据集 X","config":"配置 1","metric":"latency","unit":"ms","statistic":"mean","status":"ok","value":12,"n":5,"sample_unit":"独立运行（合成）","uncertainty":{"kind":"SD","low":11,"high":13},"source":"合成演示/X/A/latency"},
+    {"method":"方法 B","dataset":"数据集 X","config":"配置 1","metric":"latency","unit":"ms","statistic":"mean","status":"ok","value":18,"n":5,"sample_unit":"独立运行（合成）","uncertainty":{"kind":"SD","low":16,"high":20},"source":"合成演示/X/B/latency"},
+    {"method":"方法 C","dataset":"数据集 X","config":"配置 1","metric":"latency","unit":"ms","statistic":"mean","status":"ok","value":24,"n":5,"sample_unit":"独立运行（合成）","uncertainty":{"kind":"SD","low":21,"high":27},"source":"合成演示/X/C/latency"},
+    {"method":"方法 A","dataset":"数据集 Y","config":"配置 1","metric":"latency","unit":"ms","statistic":"mean","status":"ok","value":15,"n":5,"sample_unit":"独立运行（合成）","uncertainty":{"kind":"SD","low":14,"high":16},"source":"合成演示/Y/A/latency"},
+    {"method":"方法 B","dataset":"数据集 Y","config":"配置 1","metric":"latency","unit":"ms","statistic":"mean","status":"ok","value":20,"n":5,"sample_unit":"独立运行（合成）","uncertainty":{"kind":"SD","low":18,"high":22},"source":"合成演示/Y/B/latency"},
+    {"method":"方法 C","dataset":"数据集 Y","config":"配置 1","metric":"latency","unit":"ms","statistic":"mean","status":"not_measured","value":null,"source":"合成演示/Y/C/latency，未测量"}
+  ]
+}

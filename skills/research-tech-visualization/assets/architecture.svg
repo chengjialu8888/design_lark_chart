@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 560" role="img" aria-labelledby="arch-title arch-desc">
+  <title id="arch-title">逻辑架构骨架：输入、处理与产物</title>
+  <desc id="arch-desc">合成示例，并非真实项目。输入进入处理模块，处理结果进入输出；参考材料单独进入处理模块。处理与输出归属示例逻辑边界，不代表部署进程或硬件。</desc>
+  <defs><marker id="arch-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#215ca0"/></marker></defs>
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;fill:#172b42;font-size:18px}.small{font-size:15px;fill:#506279}.heading{font-size:28px;font-weight:700}.label{font-weight:650}.edge{fill:none;stroke:#215ca0;stroke-width:2.5;marker-end:url(#arch-arrow)}</style>
+  <rect width="1040" height="560" fill="#fff"/>
+  <text x="40" y="48" class="heading">先表达职责，再表达连接</text>
+  <text x="40" y="80" class="small">可编辑 SVG · 合成示例 · 逻辑关系，不代表部署事实</text>
+  <rect id="arch-boundary" data-viz-node="container" x="350" y="125" width="650" height="280" rx="16" fill="#f5f8fc" stroke="#aabbd0"/>
+  <text data-viz-owner="arch-boundary" x="375" y="160" class="small">示例逻辑边界 / 须按真实材料命名</text>
+  <rect id="arch-input" data-viz-node="component" x="40" y="220" width="210" height="100" rx="12" fill="#eaf1fa" stroke="#215ca0"/>
+  <text data-viz-owner="arch-input" x="64" y="257" class="label">输入材料</text>
+  <text data-viz-owner="arch-input" x="64" y="288" class="small">对象与格式待核实</text>
+  <rect id="arch-process" data-viz-node="component" data-viz-parent="arch-boundary" x="390" y="220" width="220" height="100" rx="12" fill="#fff" stroke="#215ca0"/>
+  <text data-viz-owner="arch-process" x="414" y="257" class="label">处理模块</text>
+  <text data-viz-owner="arch-process" x="414" y="288" class="small">只保留已核实职责</text>
+  <rect id="arch-output" data-viz-node="component" data-viz-parent="arch-boundary" x="750" y="220" width="210" height="100" rx="12" fill="#edf6f3" stroke="#147568"/>
+  <text data-viz-owner="arch-output" x="774" y="257" class="label">输出产物</text>
+  <text data-viz-owner="arch-output" x="774" y="288" class="small">对象与去向待核实</text>
+  <rect id="arch-reference" data-viz-node="component" x="40" y="410" width="210" height="76" rx="12" fill="#fff" stroke="#7b8797"/>
+  <text data-viz-owner="arch-reference" x="64" y="454" class="label">参考材料</text>
+  <line class="edge" data-viz-from="arch-input" data-viz-to="arch-process" data-viz-kind="data" x1="250" y1="270" x2="390" y2="270"/>
+  <text x="278" y="247" class="small">输入对象</text>
+  <line class="edge" data-viz-from="arch-process" data-viz-to="arch-output" data-viz-kind="data" x1="610" y1="270" x2="750" y2="270"/>
+  <text x="638" y="247" class="small">处理结果</text>
+  <polyline class="edge" data-viz-from="arch-reference" data-viz-to="arch-process" data-viz-kind="reference" points="250,448 500,448 500,320" stroke-dasharray="6 5"/>
+  <text x="281" y="431" class="small">参考输入</text>
+  <line x1="580" y1="466" x2="620" y2="466" stroke="#215ca0" stroke-width="2.5"/>
+  <text x="632" y="472" class="small">实线：数据</text>
+  <line x1="770" y1="466" x2="810" y2="466" stroke="#215ca0" stroke-width="2.5" stroke-dasharray="6 5"/>
+  <text x="822" y="472" class="small">虚线：参考</text>
+  <text x="40" y="532" class="small">来源：骨架演示；复用时替换所有示例对象、关系、边界与来源，不自动补全协议或设备。</text>
+</svg>

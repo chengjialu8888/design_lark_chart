@@ -1,0 +1,2955 @@
+{
+  "version": 2,
+  "id": "react-loop-generic",
+  "title": "一个循环，怎样变成几个会话",
+  "notice": "B02 选段改编 · 节奏重排；连线含归属说明 · 非完整 Agent 实现",
+  "playback": {
+    "mode": "presentation",
+    "end": "loop",
+    "selector": true
+  },
+  "actors": [
+    {
+      "id": "request",
+      "label": "帮我写周报",
+      "kind": "message"
+    },
+    {
+      "id": "session",
+      "label": "会话 1",
+      "kind": "group"
+    },
+    {
+      "id": "think",
+      "label": "想",
+      "kind": "service"
+    },
+    {
+      "id": "act",
+      "label": "做",
+      "kind": "service"
+    },
+    {
+      "id": "observe",
+      "label": "看",
+      "kind": "service"
+    },
+    {
+      "id": "tool",
+      "label": "工具",
+      "kind": "service"
+    },
+    {
+      "id": "followup",
+      "label": "帮我写邮件",
+      "kind": "message"
+    },
+    {
+      "id": "slides",
+      "label": "帮我做 PPT",
+      "kind": "message"
+    },
+    {
+      "id": "second",
+      "label": "会话 2",
+      "kind": "group"
+    },
+    {
+      "id": "third",
+      "label": "会话 3",
+      "kind": "group"
+    }
+  ],
+  "relations": [
+    {
+      "id": "input",
+      "from": "request",
+      "to": "think",
+      "kind": "message",
+      "label": "发起任务",
+      "produces": [
+        "input-received"
+      ],
+      "narrowRoute": {
+        "from": "bottom",
+        "to": "top",
+        "via": [
+          [
+            0.02,
+            105
+          ],
+          [
+            0.02,
+            276
+          ],
+          [
+            0.145,
+            276
+          ]
+        ],
+        "labelAt": 0.1,
+        "labelOffset": [
+          0,
+          10
+        ]
+      }
+    },
+    {
+      "id": "reason",
+      "from": "think",
+      "to": "act",
+      "kind": "dependency",
+      "label": "决策",
+      "requires": [
+        "input-received"
+      ],
+      "produces": [
+        "decided"
+      ],
+      "wideRoute": {
+        "from": "right",
+        "to": "left"
+      },
+      "narrowRoute": {
+        "from": "right",
+        "to": "left"
+      }
+    },
+    {
+      "id": "call",
+      "from": "act",
+      "to": "tool",
+      "kind": "call",
+      "label": "调用",
+      "requires": [
+        "decided"
+      ],
+      "produces": [
+        "called"
+      ]
+    },
+    {
+      "id": "return",
+      "from": "tool",
+      "to": "act",
+      "kind": "return",
+      "label": "返回",
+      "requires": [
+        "called"
+      ],
+      "produces": [
+        "returned"
+      ]
+    },
+    {
+      "id": "observe-result",
+      "from": "act",
+      "to": "observe",
+      "kind": "dependency",
+      "label": "结果",
+      "requires": [
+        "returned"
+      ],
+      "produces": [
+        "observed"
+      ],
+      "wideRoute": {
+        "from": "right",
+        "to": "left"
+      },
+      "narrowRoute": {
+        "from": "right",
+        "to": "left"
+      }
+    },
+    {
+      "id": "next-round",
+      "from": "observe",
+      "to": "think",
+      "kind": "dependency",
+      "label": "下一轮",
+      "requires": [
+        "observed"
+      ],
+      "produces": [
+        "continued"
+      ],
+      "wideRoute": {
+        "from": "bottom",
+        "to": "bottom",
+        "via": [
+          [
+            0.85,
+            190
+          ],
+          [
+            0.43,
+            190
+          ]
+        ]
+      },
+      "narrowRoute": {
+        "from": "bottom",
+        "to": "bottom",
+        "via": [
+          [
+            0.855,
+            430
+          ],
+          [
+            0.145,
+            430
+          ]
+        ]
+      }
+    },
+    {
+      "id": "queued",
+      "from": "followup",
+      "to": "session",
+      "kind": "message",
+      "label": "等待当前轮",
+      "narrowRoute": {
+        "from": "bottom",
+        "to": "top"
+      }
+    },
+    {
+      "id": "owns-first",
+      "from": "request",
+      "to": "session",
+      "kind": "ownership",
+      "label": "发起任务"
+    },
+    {
+      "id": "owns-second",
+      "from": "followup",
+      "to": "second",
+      "kind": "ownership",
+      "label": "你另开"
+    },
+    {
+      "id": "owns-third",
+      "from": "slides",
+      "to": "third",
+      "kind": "ownership",
+      "label": "你另开"
+    }
+  ],
+  "contract": {
+    "sources": [
+      {
+        "id": "source",
+        "reference": "https://share.slray.com/ks4/blocks/b02_react_loop.html",
+        "scope": "已核对 B02 阶段 2 / 4 / 5；保留循环、等待当前轮、用户另开会话的语义。动画时长和归属连线为改编。"
+      }
+    ],
+    "facts": [
+      {
+        "id": "input-received",
+        "description": "首条请求送达",
+        "origin": "flow",
+        "after": [],
+        "source": "source"
+      },
+      {
+        "id": "decided",
+        "description": "决策已交到执行环节",
+        "origin": "flow",
+        "after": [
+          "input-received"
+        ],
+        "source": "source"
+      },
+      {
+        "id": "called",
+        "description": "工具收到调用",
+        "origin": "flow",
+        "after": [
+          "decided"
+        ],
+        "source": "source"
+      },
+      {
+        "id": "returned",
+        "description": "工具结果已返回",
+        "origin": "flow",
+        "after": [
+          "called"
+        ],
+        "source": "source"
+      },
+      {
+        "id": "observed",
+        "description": "结果已被观察",
+        "origin": "flow",
+        "after": [
+          "returned"
+        ],
+        "source": "source"
+      },
+      {
+        "id": "continued",
+        "description": "下一轮开始",
+        "origin": "flow",
+        "after": [
+          "observed"
+        ],
+        "source": "source"
+      },
+      {
+        "id": "followup-arrived",
+        "description": "后续消息到达但未注入当前轮",
+        "origin": "external",
+        "after": [
+          "continued"
+        ],
+        "source": "source"
+      },
+      {
+        "id": "opened-second",
+        "description": "用户主动另开邮件会话",
+        "origin": "external",
+        "after": [],
+        "source": "source"
+      },
+      {
+        "id": "opened-third",
+        "description": "用户主动另开 PPT 会话",
+        "origin": "external",
+        "after": [],
+        "source": "source"
+      }
+    ],
+    "rules": [
+      {
+        "id": "reason-after-input",
+        "type": "requires",
+        "actor": "think",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "input-received"
+        ]
+      },
+      {
+        "id": "act-after-decision",
+        "type": "requires",
+        "actor": "act",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "decided"
+        ]
+      },
+      {
+        "id": "tool-after-call",
+        "type": "requires",
+        "actor": "tool",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "called"
+        ]
+      },
+      {
+        "id": "look-after-result",
+        "type": "requires",
+        "actor": "observe",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "returned"
+        ]
+      },
+      {
+        "id": "second-is-manual",
+        "type": "requires",
+        "actor": "second",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "opened-second"
+        ]
+      },
+      {
+        "id": "third-is-manual",
+        "type": "requires",
+        "actor": "third",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "opened-third"
+        ]
+      },
+      {
+        "id": "isolated-sessions",
+        "type": "independent",
+        "actors": [
+          "session",
+          "second",
+          "third"
+        ]
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "label": "想 → 做 → 看",
+      "detail": "01 / 一次请求，带动持续循环",
+      "duration": 11700,
+      "height": 380,
+      "narrowHeight": 680,
+      "frames": [
+        {
+          "at": 0,
+          "caption": "请求先进入会话，再启动推理；工具不会凭空开始执行。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "normal"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "flow",
+              "travel": 1000
+            }
+          ],
+          "facts": []
+        },
+        {
+          "at": 1200,
+          "caption": "想：根据目标和已有上下文进行推理。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "active"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "input-received"
+          ]
+        },
+        {
+          "at": 2500,
+          "caption": "把决策交给执行环节。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "active"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "flow",
+              "travel": 900
+            }
+          ],
+          "facts": [
+            "input-received"
+          ]
+        },
+        {
+          "at": 3500,
+          "caption": "做：发起工具调用。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "normal"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "active"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            },
+            {
+              "relation": "call",
+              "state": "flow",
+              "travel": 900
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided"
+          ]
+        },
+        {
+          "at": 4500,
+          "caption": "工具收到调用后，执行外部操作。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "normal"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "active"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            },
+            {
+              "relation": "call",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided",
+            "called"
+          ]
+        },
+        {
+          "at": 5700,
+          "caption": "外部操作结束，结果沿返回路径送回。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "normal"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "active"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            },
+            {
+              "relation": "return",
+              "state": "flow",
+              "travel": 900
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided",
+            "called"
+          ]
+        },
+        {
+          "at": 6800,
+          "caption": "结果返回后，进入观察环节。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "normal"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "active"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "flow",
+              "travel": 900
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided",
+            "called",
+            "returned"
+          ]
+        },
+        {
+          "at": 7900,
+          "caption": "看：观察结果，更新对任务的判断。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "normal"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "active"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided",
+            "called",
+            "returned",
+            "observed"
+          ]
+        },
+        {
+          "at": 9200,
+          "caption": "观察不是终点；它为下一轮推理提供依据。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "normal"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "active"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "flow",
+              "travel": 900
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided",
+            "called",
+            "returned",
+            "observed"
+          ]
+        },
+        {
+          "at": 10300,
+          "caption": "同一会话带着结果，进入下一轮。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "active"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided",
+            "called",
+            "returned",
+            "observed",
+            "continued"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "插一句话",
+      "detail": "02 / 新消息，等待当前轮结束",
+      "duration": 5200,
+      "height": 380,
+      "narrowHeight": 680,
+      "frames": [
+        {
+          "at": 0,
+          "caption": "第一轮已完成，第二轮正在继续。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "active"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided",
+            "called",
+            "returned",
+            "observed",
+            "continued"
+          ]
+        },
+        {
+          "at": 1000,
+          "caption": "新消息到来：等待当前轮结束，而不是等整个任务结束。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "active"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            },
+            "followup": {
+              "wide": [
+                0.02,
+                250,
+                0.22,
+                82
+              ],
+              "narrow": [
+                0.04,
+                110,
+                0.92,
+                68
+              ],
+              "lines": [
+                "暂不打断当前轮"
+              ],
+              "state": "waiting"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            },
+            {
+              "relation": "queued",
+              "state": "waiting"
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided",
+            "called",
+            "returned",
+            "observed",
+            "continued",
+            "followup-arrived"
+          ]
+        },
+        {
+          "at": 1600,
+          "caption": "会话仍在推进当前轮，不因为新消息到来就暂停。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "active"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            },
+            "followup": {
+              "wide": [
+                0.02,
+                250,
+                0.22,
+                82
+              ],
+              "narrow": [
+                0.04,
+                110,
+                0.92,
+                68
+              ],
+              "lines": [
+                "暂不打断当前轮"
+              ],
+              "state": "waiting"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "flow",
+              "travel": 900
+            },
+            {
+              "relation": "queued",
+              "state": "waiting"
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided",
+            "called",
+            "returned",
+            "observed",
+            "continued",
+            "followup-arrived"
+          ]
+        },
+        {
+          "at": 2700,
+          "caption": "当前轮继续调用工具，新消息仍留在会话边界之外。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "normal"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "active"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "normal"
+            },
+            "followup": {
+              "wide": [
+                0.02,
+                250,
+                0.22,
+                82
+              ],
+              "narrow": [
+                0.04,
+                110,
+                0.92,
+                68
+              ],
+              "lines": [
+                "暂不打断当前轮"
+              ],
+              "state": "waiting"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            },
+            {
+              "relation": "call",
+              "state": "flow",
+              "travel": 900
+            },
+            {
+              "relation": "queued",
+              "state": "waiting"
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided",
+            "called",
+            "returned",
+            "observed",
+            "continued",
+            "followup-arrived"
+          ]
+        },
+        {
+          "at": 3900,
+          "caption": "工具继续执行。本选段不展示后续取出消息的时刻。",
+          "items": {
+            "request": {
+              "wide": [
+                0.02,
+                95,
+                0.22,
+                92
+              ],
+              "narrow": [
+                0.04,
+                10,
+                0.92,
+                68
+              ],
+              "lines": [
+                "一件持续的事"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.3,
+                15,
+                0.68,
+                340
+              ],
+              "narrow": [
+                0.02,
+                230,
+                0.96,
+                420
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "think",
+                "act",
+                "observe",
+                "tool"
+              ],
+              "label": "会话 1 · 周报"
+            },
+            "think": {
+              "wide": [
+                0.34,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.04,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "推理"
+              ],
+              "state": "normal"
+            },
+            "act": {
+              "wide": [
+                0.55,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.395,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "执行"
+              ],
+              "state": "normal"
+            },
+            "observe": {
+              "wide": [
+                0.77,
+                95,
+                0.17,
+                76
+              ],
+              "narrow": [
+                0.75,
+                290,
+                0.21,
+                82
+              ],
+              "lines": [
+                "观察"
+              ],
+              "state": "normal"
+            },
+            "tool": {
+              "wide": [
+                0.53,
+                250,
+                0.22,
+                75
+              ],
+              "narrow": [
+                0.3,
+                515,
+                0.4,
+                78
+              ],
+              "lines": [
+                "外部操作"
+              ],
+              "state": "active"
+            },
+            "followup": {
+              "wide": [
+                0.02,
+                250,
+                0.22,
+                82
+              ],
+              "narrow": [
+                0.04,
+                110,
+                0.92,
+                68
+              ],
+              "lines": [
+                "暂不打断当前轮"
+              ],
+              "state": "waiting"
+            }
+          },
+          "links": [
+            {
+              "relation": "input",
+              "state": "idle"
+            },
+            {
+              "relation": "reason",
+              "state": "idle"
+            },
+            {
+              "relation": "observe-result",
+              "state": "idle"
+            },
+            {
+              "relation": "next-round",
+              "state": "idle"
+            },
+            {
+              "relation": "call",
+              "state": "idle"
+            },
+            {
+              "relation": "queued",
+              "state": "waiting"
+            }
+          ],
+          "facts": [
+            "input-received",
+            "decided",
+            "called",
+            "returned",
+            "observed",
+            "continued",
+            "followup-arrived"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "多开几个",
+      "detail": "03 / 另一种选择：你主动另开会话",
+      "duration": 5400,
+      "height": 430,
+      "narrowHeight": 470,
+      "frames": [
+        {
+          "at": 0,
+          "caption": "先收起会话 1 的细节。这是用户的另一种选择，不是系统自动分流。",
+          "items": {
+            "request": {
+              "wide": [
+                0.03,
+                40,
+                0.28,
+                84
+              ],
+              "narrow": [
+                0.03,
+                40,
+                0.42,
+                84
+              ],
+              "lines": [
+                "周报"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.53,
+                40,
+                0.42,
+                84
+              ],
+              "narrow": [
+                0.62,
+                40,
+                0.35,
+                84
+              ],
+              "lines": [
+                "想 → 做 → 看"
+              ],
+              "state": "normal"
+            }
+          },
+          "links": [
+            {
+              "relation": "owns-first",
+              "state": "idle"
+            }
+          ],
+          "facts": []
+        },
+        {
+          "at": 1900,
+          "caption": "你主动打开邮件会话，各自维护自己的上下文。",
+          "items": {
+            "request": {
+              "wide": [
+                0.03,
+                40,
+                0.28,
+                84
+              ],
+              "narrow": [
+                0.03,
+                40,
+                0.42,
+                84
+              ],
+              "lines": [
+                "周报"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.53,
+                40,
+                0.42,
+                84
+              ],
+              "narrow": [
+                0.62,
+                40,
+                0.35,
+                84
+              ],
+              "lines": [
+                "想 → 做 → 看"
+              ],
+              "state": "normal"
+            },
+            "followup": {
+              "wide": [
+                0.03,
+                170,
+                0.28,
+                84
+              ],
+              "narrow": [
+                0.03,
+                185,
+                0.42,
+                84
+              ],
+              "lines": [
+                "邮件"
+              ],
+              "state": "normal"
+            },
+            "second": {
+              "wide": [
+                0.53,
+                170,
+                0.42,
+                84
+              ],
+              "narrow": [
+                0.62,
+                185,
+                0.35,
+                84
+              ],
+              "lines": [
+                "独立上下文"
+              ],
+              "state": "active"
+            }
+          },
+          "links": [
+            {
+              "relation": "owns-first",
+              "state": "idle"
+            },
+            {
+              "relation": "owns-second",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "opened-second"
+          ]
+        },
+        {
+          "at": 3200,
+          "caption": "再打开 PPT 会话。会话之间没有画出自动调度或通信。",
+          "items": {
+            "request": {
+              "wide": [
+                0.03,
+                40,
+                0.28,
+                84
+              ],
+              "narrow": [
+                0.03,
+                40,
+                0.42,
+                84
+              ],
+              "lines": [
+                "周报"
+              ],
+              "state": "normal"
+            },
+            "session": {
+              "wide": [
+                0.53,
+                40,
+                0.42,
+                84
+              ],
+              "narrow": [
+                0.62,
+                40,
+                0.35,
+                84
+              ],
+              "lines": [
+                "想 → 做 → 看"
+              ],
+              "state": "normal"
+            },
+            "followup": {
+              "wide": [
+                0.03,
+                170,
+                0.28,
+                84
+              ],
+              "narrow": [
+                0.03,
+                185,
+                0.42,
+                84
+              ],
+              "lines": [
+                "邮件"
+              ],
+              "state": "normal"
+            },
+            "second": {
+              "wide": [
+                0.53,
+                170,
+                0.42,
+                84
+              ],
+              "narrow": [
+                0.62,
+                185,
+                0.35,
+                84
+              ],
+              "lines": [
+                "独立上下文"
+              ],
+              "state": "active"
+            },
+            "slides": {
+              "wide": [
+                0.03,
+                300,
+                0.28,
+                84
+              ],
+              "narrow": [
+                0.03,
+                330,
+                0.42,
+                84
+              ],
+              "lines": [
+                "PPT"
+              ],
+              "state": "normal"
+            },
+            "third": {
+              "wide": [
+                0.53,
+                300,
+                0.42,
+                84
+              ],
+              "narrow": [
+                0.62,
+                330,
+                0.35,
+                84
+              ],
+              "lines": [
+                "独立上下文"
+              ],
+              "state": "active"
+            }
+          },
+          "links": [
+            {
+              "relation": "owns-first",
+              "state": "idle"
+            },
+            {
+              "relation": "owns-second",
+              "state": "idle"
+            },
+            {
+              "relation": "owns-third",
+              "state": "idle"
+            }
+          ],
+          "facts": [
+            "opened-second",
+            "opened-third"
+          ]
+        }
+      ],
+      "resetFacts": true,
+      "branchReason": "原文阶段 5 展示用户另开会话的选择，不把阶段 4 的等待消息画成自动转交。"
+    }
+  ]
+}

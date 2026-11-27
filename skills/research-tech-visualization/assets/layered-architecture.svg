@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 540" role="img" aria-labelledby="layers-title layers-desc">
+  <title id="layers-title">分层结构骨架</title><desc id="layers-desc">概念示例：交互、编排、计算和数据四层。纵向位置表示抽象层次，不表示执行顺序；编排层是本图讲解焦点，不代表最重要或性能最佳。</desc>
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;fill:#172b42;font-size:19px}.small{font-size:16px;fill:#506279}.heading{font-size:28px;font-weight:700}</style>
+  <rect width="1040" height="540" fill="#fff"/><text x="40" y="48" class="heading">分层表达职责，不暗示执行顺序</text><text x="40" y="82" class="small">概念示例 · 编排层为当前讲解焦点 · 具体职责与层次需由材料支持</text>
+  <text x="40" y="145" class="small">抽象层次</text><line x1="84" y1="170" x2="84" y2="420" stroke="#9caec3"/><path d="M78 175 L84 165 L90 175" fill="none" stroke="#506279"/>
+  <rect id="layer-ui" data-viz-node="component" x="160" y="135" width="840" height="76" fill="#f4f7fa" stroke="#cbd5e1"/>
+  <text data-viz-owner="layer-ui" x="184" y="181">L4　交互层</text><text data-viz-owner="layer-ui" x="530" y="181" class="small">面向读者的输入、展示与操作</text>
+  <rect id="layer-control" data-viz-node="component" x="160" y="223" width="840" height="76" fill="#eaf1fa" stroke="#215ca0" stroke-width="2"/>
+  <text data-viz-owner="layer-control" x="184" y="269">L3　编排层</text><text data-viz-owner="layer-control" x="530" y="269" class="small">示例焦点：任务组织与边界</text>
+  <rect id="layer-compute" data-viz-node="component" x="160" y="311" width="840" height="76" fill="#f4f7fa" stroke="#cbd5e1"/>
+  <text data-viz-owner="layer-compute" x="184" y="357">L2　计算层</text><text data-viz-owner="layer-compute" x="530" y="357" class="small">算法、算子或执行后端</text>
+  <rect id="layer-data" data-viz-node="component" x="160" y="399" width="840" height="76" fill="#f4f7fa" stroke="#cbd5e1"/>
+  <text data-viz-owner="layer-data" x="184" y="445">L1　数据层</text><text data-viz-owner="layer-data" x="530" y="445" class="small">输入、状态与持久化对象</text>
+  <text x="40" y="517" class="small">各层不自动等于独立进程；需要调用关系时另画已核实的边，不从垂直邻近推断。</text>
+</svg>

@@ -1,0 +1,6 @@
+interface:
+  display_name: "科研与技术可视化"
+  short_description: "设计可信的架构图、实验指标与科研网页，支持飞书嵌入、原生图表和妙搭分享"
+  default_prompt: "使用 $research-tech-visualization，依据我提供的材料选择合适表达，制作可信、易读、可修改、可验证的图或页面。"
+policy:
+  allow_implicit_invocation: true

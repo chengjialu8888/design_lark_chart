@@ -1,0 +1,116 @@
+<section id="__STORY_ID__" class="scene-story" aria-label="架构分镜演示">
+  <header><h2 data-title></h2><details class="scene-provenance"><summary aria-label="查看图解说明">说明</summary><span class="text-small text-muted" data-notice></span></details></header>
+  <div class="scene-nav" role="group" aria-label="选择分镜"></div>
+  <div class="scene-heading"><h3 data-scene-title></h3><span class="text-small text-muted tabular-nums" data-count></span></div>
+  <div class="scene-stage" role="img" aria-label="当前分镜"><div class="scene-canvas"><svg class="scene-links" aria-hidden="true"></svg><div class="scene-actors"></div></div></div>
+  <div class="scene-legend" aria-label="连线图例" hidden></div>
+  <div class="scene-caption" aria-live="polite" aria-atomic="true" data-caption></div>
+  <div class="progress" role="progressbar" aria-label="本幕进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar" style="width:0%"></div></div>
+  <div class="scene-controls"><div class="viz-controls">
+    <button class="btn" type="button" data-prev aria-label="上一幕">←</button>
+    <button class="btn btn-primary" type="button" data-play>播放演示</button>
+    <button class="btn" type="button" data-next aria-label="下一幕">→</button>
+    <button class="btn" type="button" data-replay>重播本幕</button>
+  </div><span class="text-small text-muted">← → 切换分镜</span></div>
+  <script type="application/json" data-story>__STORY_DATA__</script>
+</section>
+<style>
+  #__STORY_ID__ {display:grid;gap:10px;color:var(--foreground);--node-shadow:0 1px 2px #18243b08,0 3px 9px #18243b08;--node-accent:var(--viz-series-1)}
+  #__STORY_ID__ header {display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+  #__STORY_ID__ .scene-provenance {position:relative;flex-shrink:0;font-size:11px;color:var(--muted-foreground)}
+  #__STORY_ID__ .scene-provenance summary {cursor:pointer;list-style:none;padding:4px 0}
+  #__STORY_ID__ .scene-provenance summary::-webkit-details-marker {display:none}
+  #__STORY_ID__ .scene-provenance[open] span {position:absolute;right:0;top:28px;width:min(320px,70vw);padding:12px 14px;border:1px solid var(--border);background:var(--background);border-radius:10px;box-shadow:var(--node-shadow);z-index:30}
+  #__STORY_ID__ .scene-nav {display:flex;flex-wrap:wrap;gap:6px}
+  #__STORY_ID__ .scene-heading,#__STORY_ID__ .scene-controls {display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+  #__STORY_ID__ .scene-heading {padding:2px 1px}
+  #__STORY_ID__ .scene-heading h3 {color:var(--muted-foreground)}
+  #__STORY_ID__ .scene-heading [data-count] {font-size:10px;letter-spacing:.05em}
+  #__STORY_ID__ .scene-stage {position:relative;width:100%;transition:height .65s cubic-bezier(.22,1,.36,1);isolation:isolate;border-radius:16px;background:var(--canvas,var(--muted));outline:1px solid var(--border);box-shadow:inset 0 1px 0 var(--background)}
+  #__STORY_ID__ .scene-stage::before {content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background-image:radial-gradient(circle,var(--border) .75px,transparent .85px);background-size:16px 16px;opacity:.65;mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent)}
+  #__STORY_ID__ .scene-stage:hover>.playback-float {opacity:.85;transform:none}
+  #__STORY_ID__ .scene-links,#__STORY_ID__ .scene-actors {position:absolute;inset:0;width:100%;height:100%}
+  #__STORY_ID__ .scene-canvas {position:absolute;inset:0;transform-origin:top left}
+  #__STORY_ID__ .scene-links {overflow:visible;pointer-events:none;z-index:1}
+  #__STORY_ID__ .scene-actor {position:absolute;top:0;left:0;box-sizing:border-box;opacity:0;transform:translate(0,0);transition:transform var(--scene-duration,.55s) var(--scene-easing,cubic-bezier(.22,1,.36,1)),width var(--scene-duration,.55s) var(--scene-easing,cubic-bezier(.22,1,.36,1)),height var(--scene-duration,.55s) var(--scene-easing,cubic-bezier(.22,1,.36,1)),opacity .25s;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:10px;pointer-events:auto;font-size:13px;line-height:18px;border-radius:8px}
+  #__STORY_ID__ .scene-actor[aria-hidden="true"] {pointer-events:none}
+  #__STORY_ID__ .scene-actor:hover .actor-shape {stroke:color-mix(in srgb,var(--node-accent) 55%,var(--border))}
+  #__STORY_ID__ .scene-actor:hover .actor-surface {filter:drop-shadow(0 2px 3px #18243b12)}
+  #__STORY_ID__ .actor-surface {position:absolute;inset:0;width:100%;height:100%;z-index:-1;overflow:visible}
+  #__STORY_ID__ .actor-surface {filter:drop-shadow(0 1px 1px #18243b09);transition:filter .25s}
+  #__STORY_ID__ .actor-shape {fill:var(--background);stroke:var(--border);stroke-width:1;transition:fill .3s,stroke .3s}
+  #__STORY_ID__ .scene-actor[data-state="active"] .actor-shape {fill:var(--background);stroke:color-mix(in srgb,var(--node-accent) 80%,var(--border));stroke-width:1}
+  #__STORY_ID__ .scene-actor[data-state="active"]:not([data-container="true"]) {box-shadow:0 0 0 2px color-mix(in srgb,var(--node-accent) 9%,transparent)}
+  #__STORY_ID__ .scene-actor[data-state="waiting"] {--node-accent:var(--orange)}
+  #__STORY_ID__ .scene-actor[data-state="waiting"] .actor-shape {fill:color-mix(in srgb,var(--orange) 4%,var(--background));stroke:color-mix(in srgb,var(--orange) 55%,var(--border))}
+  #__STORY_ID__ .scene-actor[data-container="true"] {justify-content:flex-start;padding:10px;pointer-events:none;box-shadow:none}
+  #__STORY_ID__ .scene-actor[data-container="true"] .actor-surface {filter:none}
+  #__STORY_ID__ .scene-actor[data-container="true"] .actor-shape {fill:color-mix(in srgb,var(--background) 55%,transparent);stroke:color-mix(in srgb,var(--border) 85%,transparent);stroke-dasharray:2 5}
+  #__STORY_ID__ .scene-actor[data-container="true"] .actor-top {color:var(--muted-foreground);font-weight:400}
+  #__STORY_ID__ .scene-actor[data-state="done"] {--node-accent:var(--green)}
+  #__STORY_ID__ .scene-actor[data-state="done"] .actor-shape {fill:var(--background);stroke:color-mix(in srgb,var(--green) 28%,var(--border))}
+  #__STORY_ID__ .scene-actor[data-muted="true"] .actor-shape {fill:var(--canvas,var(--muted));stroke:color-mix(in srgb,var(--border) 65%,transparent)}
+  #__STORY_ID__ .scene-actor[data-muted="true"] .actor-top {color:var(--muted-foreground)}
+  #__STORY_ID__ .actor-top {display:flex;align-items:center;gap:7px;font-weight:400;overflow-wrap:anywhere;min-width:0;line-height:18px;padding-right:8px}
+  #__STORY_ID__ .actor-title {min-width:0;flex:1}
+  #__STORY_ID__ .actor-mark {width:22px;height:22px;color:var(--muted-foreground);flex-shrink:0;display:grid;place-items:center;background:var(--muted);border:1px solid color-mix(in srgb,var(--border) 65%,transparent);border-radius:5px}
+  #__STORY_ID__ .actor-icon {width:14px;height:14px;overflow:visible}
+  #__STORY_ID__ .scene-actor[data-kind="person"] .actor-mark {border-radius:50%}
+  #__STORY_ID__ .scene-actor[data-kind="message"] .actor-mark,#__STORY_ID__ .scene-actor[data-state="active"] .actor-mark {background:color-mix(in srgb,var(--node-accent) 8%,var(--background));border-color:color-mix(in srgb,var(--node-accent) 16%,var(--border))}
+  #__STORY_ID__ .scene-actor[data-container="true"] .actor-mark {width:16px;height:18px;background:none;border:0}
+  #__STORY_ID__ .actor-state {position:absolute;right:8px;top:8px;width:4px;height:4px;border-radius:50%;background:var(--border)}
+  #__STORY_ID__ .scene-actor[data-state="active"] .actor-state,#__STORY_ID__ .scene-actor[data-state="waiting"] .actor-state,#__STORY_ID__ .scene-actor[data-state="done"] .actor-state {background:var(--node-accent)}
+  #__STORY_ID__ .scene-actor[data-container="true"] .actor-state {display:none}
+  #__STORY_ID__ .actor-port {position:absolute;width:6px;height:6px;border:1px solid var(--muted-foreground);border-radius:50%;background:var(--background);pointer-events:none;z-index:3}
+  #__STORY_ID__ .actor-port[hidden] {display:none}
+  #__STORY_ID__ .actor-port[data-kind="call"],#__STORY_ID__ .actor-port[data-kind="return"] {--port-color:var(--green)}
+  #__STORY_ID__ .actor-port[data-state="flow"] {border-color:var(--port-color,var(--node-accent));background:var(--port-color,var(--node-accent));box-shadow:0 0 0 2px var(--background)}
+  #__STORY_ID__ .actor-port[data-state="waiting"] {border-color:var(--orange)}
+  #__STORY_ID__ .actor-port[data-side="left"] {left:-2px;top:calc(50% - 3px)}
+  #__STORY_ID__ .actor-port[data-side="right"] {right:-2px;top:calc(50% - 3px)}
+  #__STORY_ID__ .actor-port[data-side="top"] {top:-2px;left:calc(50% - 3px)}
+  #__STORY_ID__ .actor-port[data-side="bottom"] {bottom:-2px;left:calc(50% - 3px)}
+  #__STORY_ID__ .scene-actor[data-state="active"] .actor-mark,#__STORY_ID__ .scene-actor[data-state="waiting"] .actor-mark,#__STORY_ID__ .scene-actor[data-state="done"] .actor-mark {color:var(--node-accent)}
+  #__STORY_ID__ .actor-lines {display:grid;gap:2px;overflow-wrap:anywhere;font-size:11px;line-height:15px;padding-top:5px;border-top:1px solid var(--border)}
+  #__STORY_ID__ .actor-lines:empty {display:none}
+  #__STORY_ID__ .scene-actor[data-density="micro"] .actor-mark {display:none}
+  #__STORY_ID__ .scene-actor[data-density="micro"] .actor-lines {padding-left:0}
+  #__STORY_ID__ .scene-actor[data-density="micro"] .actor-lines {padding-top:0;border-top:0}
+  #__STORY_ID__ .actor-line {transition:opacity .2s,transform .35s}
+  #__STORY_ID__ .actor-line.enter {animation:__STORY_ID__-line .4s both}
+  #__STORY_ID__ .scene-actor[data-kind="terminal"] {padding-top:10px}
+  #__STORY_ID__ .scene-actor[data-kind="terminal"] .actor-shape {fill:color-mix(in srgb,var(--foreground) 4%,var(--background))}
+  #__STORY_ID__ .scene-actor[data-kind="terminal"] .actor-lines {font-family:ui-monospace,SFMono-Regular,monospace;color:var(--foreground)}
+  #__STORY_ID__ .scene-actor[data-kind="document"] {padding-top:10px}
+  #__STORY_ID__ .scene-actor[data-kind="person"] .actor-shape {fill:var(--background);stroke:var(--border)}
+  #__STORY_ID__ .scene-actor[data-kind="person"] .actor-mark {color:var(--node-accent)}
+  #__STORY_ID__ .scene-actor[data-kind="message"] .actor-mark {color:var(--node-accent)}
+  #__STORY_ID__ .scene-actor[data-kind="message"] .actor-shape {fill:var(--background)}
+  #__STORY_ID__ .scene-actor[data-kind="message"] .actor-lines {color:var(--foreground)}
+  #__STORY_ID__ .scene-actor {isolation:isolate}
+  #__STORY_ID__ .scene-connection {--edge-color:color-mix(in srgb,var(--foreground) 23%,var(--background))}
+  #__STORY_ID__ .scene-connection[data-state="flow"] {--edge-color:color-mix(in srgb,var(--foreground) 65%,var(--background))}
+  #__STORY_ID__ .scene-connection[data-kind="message"],#__STORY_ID__ .scene-connection[data-kind="ownership"] {--edge-color:var(--viz-series-1)}
+  #__STORY_ID__ .scene-connection[data-kind="call"][data-state="flow"],#__STORY_ID__ .scene-connection[data-kind="return"][data-state="flow"] {--edge-color:var(--green)}
+  #__STORY_ID__ .scene-connection[data-state="waiting"] {--edge-color:var(--orange)}
+  #__STORY_ID__ .scene-edge {fill:none;stroke:var(--edge-color);stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round}
+  #__STORY_ID__ .edge-track {fill:none;stroke:var(--edge-color);stroke-width:6;opacity:.06;stroke-linecap:round;stroke-linejoin:round}
+  #__STORY_ID__ .scene-connection[data-state="waiting"] .scene-edge {stroke-dasharray:4 4}
+  #__STORY_ID__ .edge-stop {stroke:var(--edge-color);stroke-width:2}
+  #__STORY_ID__ .edge-packet {fill:var(--edge-color)}
+  #__STORY_ID__ .edge-packet {stroke:var(--background);stroke-width:1}
+  #__STORY_ID__ .edge-beam {fill:none;stroke:var(--edge-color);stroke-width:2;stroke-linecap:round;pointer-events:none}
+  #__STORY_ID__ .edge-trail {fill:var(--edge-color);pointer-events:none}
+  #__STORY_ID__ .edge-arrival {fill:none;stroke:var(--edge-color);stroke-width:1.5;pointer-events:none}
+  #__STORY_ID__ .edge-halo {fill:var(--edge-color);opacity:.12}
+  #__STORY_ID__ .edge-label {fill:var(--muted-foreground);stroke:var(--canvas,var(--muted));stroke-width:5px;paint-order:stroke;font-size:10px}
+  #__STORY_ID__ .playback-settings summary {color:var(--muted-foreground);padding:6px 0}
+  #__STORY_ID__ .scene-caption {min-height:3.3em;font-size:12px;color:var(--muted-foreground);padding:11px 14px;border-left:2px solid var(--viz-series-1);border-radius:0 10px 10px 0;background:var(--canvas,var(--muted));line-height:1.7}
+  #__STORY_ID__ .no-motion,#__STORY_ID__ .no-motion * {transition:none!important;animation:none!important}
+  @keyframes __STORY_ID__-line {from {opacity:0;transform:translateY(5px)} to {opacity:1;transform:translateY(0)}}
+  @media(max-width:560px) {#__STORY_ID__ .scene-controls>span {display:none}}
+  @media(prefers-reduced-motion:reduce) {#__STORY_ID__ *,#__STORY_ID__ .scene-stage {transition:none!important;animation:none!important}}
+</style>
+<script>
+__STORY_PLAYER__
+</script>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>实验结果 · 矩阵页面骨架</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="themes.css">
+</head>
+<body data-theme="grafana">
+<a class="skip" href="#main">跳到结果</a>
+<div class="wrap">
+  <header class="site-header"><span class="brand">RESULTS / 比较面板</span><nav aria-label="结果导航"><a href="experiment-panel.html#table">完整数据表</a><a href="gallery.html">资产库</a></nav></header>
+  <main id="main">
+    <header class="hero">
+      <p class="eyebrow">COMPARE WITH CONTEXT</p>
+      <h1>多个实验，<br>不止一张柱状图。</h1>
+      <p class="lead">将均值、不确定性、跨数据集一致性与成本权衡分开读。方法颜色固定，图型服务于问题。</p>
+      <p class="notice">合成示例：3 个方法 × 2 个数据集 × 2 个指标，12 条摘要；一条未测量，一条只有均值且 n 未知。</p>
+    </header>
+    <section class="section">
+      <h2>配置与统计口径</h2>
+      <p>当前示例均属“配置 1”。正式任务替换为硬件、精度、batch、测量范围等真实条件；存在差异时分组展示，不直接归因方法优劣。</p>
+    </section>
+    <section class="section grid">
+      <figure class="panel">
+        <h3>01 · 方法位置</h3>
+        <p class="scroll-hint">紧凑版适配双栏，窄屏可在图内横向滚动。</p>
+        <div class="scroll" tabindex="0" role="region" aria-label="均值点图"><img class="chart-compact" src="chart-dot-compact.svg" alt="方法均值点图"></div>
+        <figcaption><a href="chart-dot.svg">打开完整点图</a>。只比较给出的均值。</figcaption>
+      </figure>
+      <figure class="panel">
+        <h3>02 · 区间信息</h3>
+        <p class="scroll-hint">紧凑版适配双栏，完整区间数值见原图与表格。</p>
+        <div class="scroll" tabindex="0" role="region" aria-label="均值与区间"><img class="chart-compact" src="chart-interval-compact.svg" alt="均值和给定区间"></div>
+        <figcaption><a href="chart-interval.svg">打开完整区间图</a>。缺区间不补造；SD 不是 CI。</figcaption>
+      </figure>
+      <figure class="panel wide">
+        <h3>03 · 成本与质量</h3>
+        <p class="scroll-hint">保留足够宽度呈现双轴与方法身份；窄屏可横向滚动。</p>
+        <div class="scroll" tabindex="0" role="region" aria-label="成本质量散点"><img class="chart" src="chart-tradeoff.svg" alt="同配置成本与质量散点图"></div>
+        <figcaption><a href="chart-tradeoff.svg">打开完整散点图</a>。没有显著性或全局最优声明。</figcaption>
+      </figure>
+      <figure class="panel wide">
+        <h3>04 · 全局矩阵</h3>
+        <p class="scroll-hint">完整保留两组数据，窄屏可横向滚动。</p>
+        <div class="scroll" tabindex="0" role="region" aria-label="结果热力矩阵"><img class="chart" src="chart-heatmap.svg" alt="同指标结果热力图"></div>
+        <figcaption><a href="chart-heatmap.svg">打开完整矩阵</a>。颜色编码数值，不编码方法优劣身份。</figcaption>
+      </figure>
+    </section>
+    <section class="section">
+      <h2>让每个值都可追查</h2>
+      <p>完整表保留配置、状态、n、区间类型和来源。视觉摘要不能代替全量数据。</p>
+      <div class="file-links"><a href="experiment-panel.html#table">全量结果表</a><a href="experiment-data.json">规范化数据</a><a href="chart-config.json">绘图配置</a></div>
+    </section>
+  </main>
+  <footer>更换数据后用随包生成脚本重建图与表；只替换文字标签会使数值和坐标不一致。</footer>
+</div>
+</body>
+</html>

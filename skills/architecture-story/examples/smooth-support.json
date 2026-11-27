@@ -1,0 +1,445 @@
+{
+  "version": 2,
+  "id": "support-comparison",
+  "title": "Support request and paired cost comparison",
+  "notice": "Illustrative support workflow and costs; values are examples, not measured production data.",
+  "actors": [
+    {
+      "id": "request",
+      "label": "Mia · support request",
+      "kind": "message",
+      "visual": {
+        "variant": "chat",
+        "avatar": "initials",
+        "avatarText": "M",
+        "side": "right",
+        "tone": "neutral",
+        "entrance": "pop"
+      }
+    },
+    {
+      "id": "triage",
+      "label": "Triage",
+      "kind": "service",
+      "visual": {
+        "variant": "plain",
+        "avatar": "bot",
+        "tone": "accent"
+      }
+    },
+    {
+      "id": "cost",
+      "label": "Cost per request",
+      "kind": "document"
+    }
+  ],
+  "relations": [
+    {
+      "id": "submit",
+      "from": "request",
+      "to": "triage",
+      "kind": "message",
+      "label": "submit",
+      "requires": [
+        "ready"
+      ],
+      "produces": [
+        "received"
+      ],
+      "style": {
+        "tone": "accent",
+        "pattern": "solid"
+      },
+      "wideRoute": {
+        "from": "bottom",
+        "to": "bottom",
+        "via": [
+          [
+            0.18,
+            186
+          ],
+          [
+            0.505,
+            186
+          ]
+        ],
+        "stops": [
+          0
+        ],
+        "labelOffset": [
+          0,
+          18
+        ]
+      },
+      "narrowRoute": {
+        "from": "bottom",
+        "to": "top",
+        "via": [
+          [
+            0.48,
+            140
+          ]
+        ],
+        "stops": [
+          0
+        ],
+        "labelOffset": [
+          40,
+          0
+        ]
+      }
+    }
+  ],
+  "contract": {
+    "sources": [
+      {
+        "id": "assumption",
+        "reference": "Explicit illustrative support scenario",
+        "scope": "No production system or measurement is asserted."
+      }
+    ],
+    "facts": [
+      {
+        "id": "ready",
+        "description": "Customer submitted a request",
+        "source": "assumption",
+        "origin": "external"
+      },
+      {
+        "id": "received",
+        "description": "Triage received the request",
+        "source": "assumption",
+        "origin": "flow",
+        "after": [
+          "ready"
+        ]
+      },
+      {
+        "id": "comparison-known",
+        "description": "Illustrative costs are available for comparison",
+        "source": "assumption",
+        "origin": "external",
+        "after": [
+          "received"
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "id": "receive-first",
+        "type": "requires",
+        "actor": "triage",
+        "states": [
+          "active"
+        ],
+        "facts": [
+          "received"
+        ]
+      },
+      {
+        "id": "known-costs",
+        "type": "requires",
+        "actor": "cost",
+        "states": [
+          "done"
+        ],
+        "facts": [
+          "comparison-known"
+        ]
+      }
+    ]
+  },
+  "presentation": {
+    "navigation": "pills",
+    "motion": "packet",
+    "canvas": {
+      "wideWidth": 720,
+      "narrowWidth": 380,
+      "maxScale": 1.35
+    },
+    "density": "compact",
+    "transition": {
+      "duration": 720,
+      "easing": [
+        0.22,
+        0.9,
+        0.24,
+        1
+      ]
+    }
+  },
+  "playback": {
+    "mode": "interactive",
+    "controls": "minimal",
+    "autoplay": false,
+    "end": "replay",
+    "selector": false
+  },
+  "scenes": [
+    {
+      "label": "Support",
+      "detail": "Receive the request, then compare illustrative costs",
+      "layout": "stable",
+      "height": 300,
+      "narrowHeight": 440,
+      "duration": 8360,
+      "frames": [
+        {
+          "at": 0,
+          "caption": "A customer request arrives before triage begins.",
+          "facts": [
+            "ready"
+          ],
+          "items": {
+            "request": {
+              "wide": [
+                0.04,
+                40,
+                0.28,
+                96
+              ],
+              "narrow": [
+                0.13,
+                24,
+                0.7,
+                96
+              ],
+              "lines": [
+                "Please check my invoice."
+              ]
+            },
+            "triage": {
+              "wide": [
+                0.4,
+                40,
+                0.21,
+                80
+              ],
+              "narrow": [
+                0.3,
+                160,
+                0.4,
+                80
+              ],
+              "lines": [
+                "Awaiting request"
+              ]
+            }
+          },
+          "links": []
+        },
+        {
+          "at": 350,
+          "caption": "A customer request arrives before triage begins.",
+          "facts": [
+            "ready"
+          ],
+          "focus": [
+            "request",
+            "triage"
+          ],
+          "items": {
+            "request": {
+              "wide": [
+                0.04,
+                40,
+                0.28,
+                96
+              ],
+              "narrow": [
+                0.13,
+                24,
+                0.7,
+                96
+              ],
+              "lines": [
+                "Please check my invoice."
+              ]
+            },
+            "triage": {
+              "wide": [
+                0.4,
+                40,
+                0.21,
+                80
+              ],
+              "narrow": [
+                0.3,
+                160,
+                0.4,
+                80
+              ],
+              "lines": [
+                "Awaiting request"
+              ]
+            }
+          },
+          "links": [
+            {
+              "relation": "submit",
+              "state": "flow",
+              "travel": 1710,
+              "packet": "Invoice",
+              "transfer": {
+                "timing": "continuous",
+                "scope": "route",
+                "effect": "soft",
+                "easing": [
+                  0.35,
+                  0,
+                  0.65,
+                  1
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "at": 2760,
+          "caption": "A customer request arrives before triage begins.",
+          "facts": [
+            "ready",
+            "received"
+          ],
+          "processing": [
+            "triage"
+          ],
+          "items": {
+            "request": {
+              "wide": [
+                0.04,
+                40,
+                0.28,
+                96
+              ],
+              "narrow": [
+                0.13,
+                24,
+                0.7,
+                96
+              ],
+              "lines": [
+                "Please check my invoice."
+              ]
+            },
+            "triage": {
+              "wide": [
+                0.4,
+                40,
+                0.21,
+                80
+              ],
+              "narrow": [
+                0.3,
+                160,
+                0.4,
+                80
+              ],
+              "lines": [
+                "Review invoice"
+              ],
+              "state": "active",
+              "visual": {
+                "tone": "warning",
+                "badge": "Review"
+              }
+            }
+          },
+          "links": [
+            {
+              "relation": "submit",
+              "state": "idle",
+              "label": ""
+            }
+          ]
+        },
+        {
+          "at": 3360,
+          "caption": "Illustrative comparison: the costs are $4 and $6 per request.",
+          "facts": [
+            "ready",
+            "received",
+            "comparison-known"
+          ],
+          "focus": [
+            "cost"
+          ],
+          "items": {
+            "request": {
+              "wide": [
+                0.04,
+                40,
+                0.28,
+                96
+              ],
+              "narrow": [
+                0.13,
+                24,
+                0.7,
+                96
+              ],
+              "lines": [
+                "Please check my invoice."
+              ]
+            },
+            "triage": {
+              "wide": [
+                0.4,
+                40,
+                0.21,
+                80
+              ],
+              "narrow": [
+                0.3,
+                160,
+                0.4,
+                80
+              ],
+              "lines": [
+                "Review invoice"
+              ]
+            },
+            "cost": {
+              "wide": [
+                0.66,
+                40,
+                0.32,
+                100
+              ],
+              "narrow": [
+                0.05,
+                290,
+                0.9,
+                100
+              ],
+              "lines": [],
+              "state": "done",
+              "metric": {
+                "max": 8,
+                "legend": true,
+                "duration": 900,
+                "delay": 0,
+                "stagger": 100,
+                "series": [
+                  {
+                    "label": "Self-service",
+                    "value": 4,
+                    "display": "$4",
+                    "tone": "success"
+                  },
+                  {
+                    "label": "Manual review",
+                    "value": 6,
+                    "display": "$6",
+                    "tone": "warning"
+                  }
+                ]
+              }
+            }
+          },
+          "links": []
+        }
+      ]
+    }
+  ]
+}

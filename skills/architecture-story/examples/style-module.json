@@ -1,0 +1,1477 @@
+{
+  "version": 2,
+  "id": "style-module",
+  "title": "架构模块风",
+  "notice": "说明性示例：请求读取记录并生成结果，不代表真实业务系统。",
+  "presentation": {
+    "style": "module"
+  },
+  "playback": {
+    "mode": "interactive",
+    "controls": "minimal",
+    "autoplay": false,
+    "end": "replay",
+    "selector": false
+  },
+  "actors": [
+    {
+      "id": "client",
+      "label": "Client",
+      "kind": "service",
+      "visual": {
+        "variant": "module",
+        "icon": "gateway"
+      }
+    },
+    {
+      "id": "runtime",
+      "label": "Runtime",
+      "kind": "group",
+      "visual": {
+        "variant": "module",
+        "icon": "pipeline"
+      }
+    },
+    {
+      "id": "worker",
+      "label": "Worker",
+      "kind": "service",
+      "visual": {
+        "variant": "module",
+        "icon": "process"
+      }
+    },
+    {
+      "id": "record",
+      "label": "Record Store",
+      "kind": "document",
+      "visual": {
+        "variant": "module",
+        "icon": "database"
+      }
+    },
+    {
+      "id": "result",
+      "label": "Result",
+      "kind": "document",
+      "visual": {
+        "variant": "module",
+        "icon": "package"
+      }
+    }
+  ],
+  "contract": {
+    "sources": [
+      {
+        "id": "assumption",
+        "reference": "Explicit illustrative assumption",
+        "scope": "A worker reads a record, then creates and owns a result after receiving the return."
+      }
+    ],
+    "facts": [
+      {
+        "id": "ready",
+        "description": "Client has a request",
+        "source": "assumption",
+        "origin": "external",
+        "after": []
+      },
+      {
+        "id": "received",
+        "description": "received",
+        "source": "assumption",
+        "origin": "flow",
+        "after": [
+          "ready"
+        ]
+      },
+      {
+        "id": "read",
+        "description": "read",
+        "source": "assumption",
+        "origin": "flow",
+        "after": [
+          "received"
+        ]
+      },
+      {
+        "id": "returned",
+        "description": "returned",
+        "source": "assumption",
+        "origin": "flow",
+        "after": [
+          "read"
+        ]
+      },
+      {
+        "id": "created",
+        "description": "created",
+        "source": "assumption",
+        "origin": "flow",
+        "after": [
+          "returned"
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "id": "result-after-return",
+        "type": "requires",
+        "actor": "result",
+        "states": [
+          "active",
+          "done"
+        ],
+        "facts": [
+          "returned",
+          "created"
+        ]
+      }
+    ]
+  },
+  "relations": [
+    {
+      "id": "flow-0",
+      "from": "client",
+      "to": "worker",
+      "label": "request",
+      "kind": "call",
+      "requires": [
+        "ready"
+      ],
+      "produces": [
+        "received"
+      ],
+      "wideRoute": {
+        "from": "right",
+        "to": "left",
+        "via": [
+          [
+            0.25,
+            225
+          ],
+          [
+            0.25,
+            145
+          ]
+        ]
+      },
+      "narrowRoute": {
+        "from": "bottom",
+        "to": "top"
+      },
+      "style": {
+        "pattern": "solid",
+        "tone": "accent",
+        "arrow": true,
+        "head": "open"
+      }
+    },
+    {
+      "id": "flow-1",
+      "from": "worker",
+      "to": "record",
+      "label": "read",
+      "kind": "call",
+      "requires": [
+        "received"
+      ],
+      "produces": [
+        "read"
+      ],
+      "wideRoute": {
+        "from": "right",
+        "to": "left",
+        "via": [
+          [
+            0.72,
+            145
+          ],
+          [
+            0.72,
+            225
+          ]
+        ]
+      },
+      "narrowRoute": {
+        "from": "right",
+        "to": "right",
+        "via": [
+          [
+            0.94,
+            265
+          ],
+          [
+            0.94,
+            685
+          ]
+        ]
+      },
+      "style": {
+        "pattern": "solid",
+        "tone": "accent",
+        "arrow": true,
+        "head": "open"
+      }
+    },
+    {
+      "id": "flow-2",
+      "from": "record",
+      "to": "worker",
+      "label": "return",
+      "kind": "return",
+      "requires": [
+        "read"
+      ],
+      "produces": [
+        "returned"
+      ],
+      "wideRoute": {
+        "from": "top",
+        "to": "top",
+        "via": [
+          [
+            0.86,
+            15
+          ],
+          [
+            0.49,
+            15
+          ]
+        ]
+      },
+      "narrowRoute": {
+        "from": "left",
+        "to": "left",
+        "via": [
+          [
+            0.06,
+            685
+          ],
+          [
+            0.06,
+            265
+          ]
+        ]
+      },
+      "style": {
+        "pattern": "dashed",
+        "tone": "accent",
+        "arrow": true,
+        "head": "open"
+      }
+    },
+    {
+      "id": "flow-3",
+      "from": "worker",
+      "to": "result",
+      "label": "create",
+      "kind": "ownership",
+      "requires": [
+        "returned"
+      ],
+      "produces": [
+        "created"
+      ],
+      "wideRoute": {
+        "from": "bottom",
+        "to": "top"
+      },
+      "narrowRoute": {
+        "from": "bottom",
+        "to": "top"
+      },
+      "style": {
+        "pattern": "dotted",
+        "tone": "accent",
+        "arrow": true,
+        "head": "diamond"
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "label": "读取与结果",
+      "detail": "相同事实，不同构图",
+      "height": 460,
+      "narrowHeight": 800,
+      "duration": 28400,
+      "layout": "stable",
+      "anchors": [
+        "client",
+        "runtime",
+        "worker",
+        "record",
+        "result"
+      ],
+      "frames": [
+        {
+          "at": 0,
+          "caption": "请求交给 Worker，读取返回后才生成结果。",
+          "items": {
+            "client": {
+              "wide": [
+                0.025,
+                170,
+                0.21,
+                110
+              ],
+              "narrow": [
+                0.2,
+                25,
+                0.6,
+                100
+              ],
+              "lines": [
+                "request"
+              ],
+              "state": "normal"
+            },
+            "runtime": {
+              "wide": [
+                0.28,
+                35,
+                0.42,
+                355
+              ],
+              "narrow": [
+                0.12,
+                165,
+                0.76,
+                390
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "worker",
+                "result"
+              ]
+            },
+            "worker": {
+              "wide": [
+                0.35,
+                90,
+                0.28,
+                110
+              ],
+              "narrow": [
+                0.24,
+                210,
+                0.52,
+                110
+              ],
+              "lines": [
+                "read → assemble"
+              ],
+              "state": "normal"
+            },
+            "record": {
+              "wide": [
+                0.745,
+                170,
+                0.23,
+                110
+              ],
+              "narrow": [
+                0.2,
+                630,
+                0.6,
+                110
+              ],
+              "lines": [
+                "record data"
+              ],
+              "state": "normal"
+            },
+            "result": {
+              "wide": [
+                0.35,
+                260,
+                0.28,
+                90
+              ],
+              "narrow": [
+                0.24,
+                410,
+                0.52,
+                95
+              ],
+              "lines": [
+                "not created"
+              ],
+              "state": "normal"
+            }
+          },
+          "facts": [
+            "ready"
+          ],
+          "links": [],
+          "focus": []
+        },
+        {
+          "at": 500,
+          "caption": "请求与读取返回保留各自方向，未返回时不生成结果。",
+          "items": {
+            "client": {
+              "wide": [
+                0.025,
+                170,
+                0.21,
+                110
+              ],
+              "narrow": [
+                0.2,
+                25,
+                0.6,
+                100
+              ],
+              "lines": [
+                "request"
+              ],
+              "state": "normal"
+            },
+            "runtime": {
+              "wide": [
+                0.28,
+                35,
+                0.42,
+                355
+              ],
+              "narrow": [
+                0.12,
+                165,
+                0.76,
+                390
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "worker",
+                "result"
+              ]
+            },
+            "worker": {
+              "wide": [
+                0.35,
+                90,
+                0.28,
+                110
+              ],
+              "narrow": [
+                0.24,
+                210,
+                0.52,
+                110
+              ],
+              "lines": [
+                "read → assemble"
+              ],
+              "state": "normal"
+            },
+            "record": {
+              "wide": [
+                0.745,
+                170,
+                0.23,
+                110
+              ],
+              "narrow": [
+                0.2,
+                630,
+                0.6,
+                110
+              ],
+              "lines": [
+                "record data"
+              ],
+              "state": "normal"
+            },
+            "result": {
+              "wide": [
+                0.35,
+                260,
+                0.28,
+                90
+              ],
+              "narrow": [
+                0.24,
+                410,
+                0.52,
+                95
+              ],
+              "lines": [
+                "not created"
+              ],
+              "state": "normal"
+            }
+          },
+          "facts": [
+            "ready"
+          ],
+          "links": [
+            {
+              "relation": "flow-0",
+              "state": "flow",
+              "travel": 1700,
+              "transfer": {
+                "timing": "continuous",
+                "scope": "route",
+                "effect": "soft",
+                "easing": [
+                  0.35,
+                  0,
+                  0.65,
+                  1
+                ]
+              },
+              "label": ""
+            }
+          ],
+          "focus": [
+            "client",
+            "worker"
+          ]
+        },
+        {
+          "at": 2900,
+          "caption": "请求与读取返回保留各自方向，未返回时不生成结果。",
+          "items": {
+            "client": {
+              "wide": [
+                0.025,
+                170,
+                0.21,
+                110
+              ],
+              "narrow": [
+                0.2,
+                25,
+                0.6,
+                100
+              ],
+              "lines": [
+                "request"
+              ],
+              "state": "normal"
+            },
+            "runtime": {
+              "wide": [
+                0.28,
+                35,
+                0.42,
+                355
+              ],
+              "narrow": [
+                0.12,
+                165,
+                0.76,
+                390
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "worker",
+                "result"
+              ]
+            },
+            "worker": {
+              "wide": [
+                0.35,
+                90,
+                0.28,
+                110
+              ],
+              "narrow": [
+                0.24,
+                210,
+                0.52,
+                110
+              ],
+              "lines": [
+                "read → assemble"
+              ],
+              "state": "normal"
+            },
+            "record": {
+              "wide": [
+                0.745,
+                170,
+                0.23,
+                110
+              ],
+              "narrow": [
+                0.2,
+                630,
+                0.6,
+                110
+              ],
+              "lines": [
+                "record data"
+              ],
+              "state": "normal"
+            },
+            "result": {
+              "wide": [
+                0.35,
+                260,
+                0.28,
+                90
+              ],
+              "narrow": [
+                0.24,
+                410,
+                0.52,
+                95
+              ],
+              "lines": [
+                "not created"
+              ],
+              "state": "normal"
+            }
+          },
+          "facts": [
+            "ready",
+            "received"
+          ],
+          "links": [
+            {
+              "relation": "flow-0",
+              "state": "idle",
+              "label": ""
+            }
+          ],
+          "focus": [
+            "worker"
+          ]
+        },
+        {
+          "at": 6400,
+          "caption": "请求与读取返回保留各自方向，未返回时不生成结果。",
+          "items": {
+            "client": {
+              "wide": [
+                0.025,
+                170,
+                0.21,
+                110
+              ],
+              "narrow": [
+                0.2,
+                25,
+                0.6,
+                100
+              ],
+              "lines": [
+                "request"
+              ],
+              "state": "normal"
+            },
+            "runtime": {
+              "wide": [
+                0.28,
+                35,
+                0.42,
+                355
+              ],
+              "narrow": [
+                0.12,
+                165,
+                0.76,
+                390
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "worker",
+                "result"
+              ]
+            },
+            "worker": {
+              "wide": [
+                0.35,
+                90,
+                0.28,
+                110
+              ],
+              "narrow": [
+                0.24,
+                210,
+                0.52,
+                110
+              ],
+              "lines": [
+                "read → assemble"
+              ],
+              "state": "normal"
+            },
+            "record": {
+              "wide": [
+                0.745,
+                170,
+                0.23,
+                110
+              ],
+              "narrow": [
+                0.2,
+                630,
+                0.6,
+                110
+              ],
+              "lines": [
+                "record data"
+              ],
+              "state": "normal"
+            },
+            "result": {
+              "wide": [
+                0.35,
+                260,
+                0.28,
+                90
+              ],
+              "narrow": [
+                0.24,
+                410,
+                0.52,
+                95
+              ],
+              "lines": [
+                "not created"
+              ],
+              "state": "normal"
+            }
+          },
+          "facts": [
+            "ready",
+            "received"
+          ],
+          "links": [
+            {
+              "relation": "flow-1",
+              "state": "flow",
+              "travel": 1700,
+              "transfer": {
+                "timing": "continuous",
+                "scope": "route",
+                "effect": "soft",
+                "easing": [
+                  0.35,
+                  0,
+                  0.65,
+                  1
+                ]
+              },
+              "label": ""
+            }
+          ],
+          "focus": [
+            "worker",
+            "record"
+          ]
+        },
+        {
+          "at": 8800,
+          "caption": "请求与读取返回保留各自方向，未返回时不生成结果。",
+          "items": {
+            "client": {
+              "wide": [
+                0.025,
+                170,
+                0.21,
+                110
+              ],
+              "narrow": [
+                0.2,
+                25,
+                0.6,
+                100
+              ],
+              "lines": [
+                "request"
+              ],
+              "state": "normal"
+            },
+            "runtime": {
+              "wide": [
+                0.28,
+                35,
+                0.42,
+                355
+              ],
+              "narrow": [
+                0.12,
+                165,
+                0.76,
+                390
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "worker",
+                "result"
+              ]
+            },
+            "worker": {
+              "wide": [
+                0.35,
+                90,
+                0.28,
+                110
+              ],
+              "narrow": [
+                0.24,
+                210,
+                0.52,
+                110
+              ],
+              "lines": [
+                "read → assemble"
+              ],
+              "state": "normal"
+            },
+            "record": {
+              "wide": [
+                0.745,
+                170,
+                0.23,
+                110
+              ],
+              "narrow": [
+                0.2,
+                630,
+                0.6,
+                110
+              ],
+              "lines": [
+                "record data"
+              ],
+              "state": "normal"
+            },
+            "result": {
+              "wide": [
+                0.35,
+                260,
+                0.28,
+                90
+              ],
+              "narrow": [
+                0.24,
+                410,
+                0.52,
+                95
+              ],
+              "lines": [
+                "not created"
+              ],
+              "state": "normal"
+            }
+          },
+          "facts": [
+            "ready",
+            "received",
+            "read"
+          ],
+          "links": [
+            {
+              "relation": "flow-1",
+              "state": "idle",
+              "label": ""
+            }
+          ],
+          "focus": [
+            "record"
+          ]
+        },
+        {
+          "at": 12300,
+          "caption": "请求与读取返回保留各自方向，未返回时不生成结果。",
+          "items": {
+            "client": {
+              "wide": [
+                0.025,
+                170,
+                0.21,
+                110
+              ],
+              "narrow": [
+                0.2,
+                25,
+                0.6,
+                100
+              ],
+              "lines": [
+                "request"
+              ],
+              "state": "normal"
+            },
+            "runtime": {
+              "wide": [
+                0.28,
+                35,
+                0.42,
+                355
+              ],
+              "narrow": [
+                0.12,
+                165,
+                0.76,
+                390
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "worker",
+                "result"
+              ]
+            },
+            "worker": {
+              "wide": [
+                0.35,
+                90,
+                0.28,
+                110
+              ],
+              "narrow": [
+                0.24,
+                210,
+                0.52,
+                110
+              ],
+              "lines": [
+                "read → assemble"
+              ],
+              "state": "normal"
+            },
+            "record": {
+              "wide": [
+                0.745,
+                170,
+                0.23,
+                110
+              ],
+              "narrow": [
+                0.2,
+                630,
+                0.6,
+                110
+              ],
+              "lines": [
+                "record data"
+              ],
+              "state": "normal"
+            },
+            "result": {
+              "wide": [
+                0.35,
+                260,
+                0.28,
+                90
+              ],
+              "narrow": [
+                0.24,
+                410,
+                0.52,
+                95
+              ],
+              "lines": [
+                "not created"
+              ],
+              "state": "normal"
+            }
+          },
+          "facts": [
+            "ready",
+            "received",
+            "read"
+          ],
+          "links": [
+            {
+              "relation": "flow-2",
+              "state": "flow",
+              "travel": 2000,
+              "transfer": {
+                "timing": "continuous",
+                "scope": "route",
+                "effect": "soft",
+                "easing": [
+                  0.35,
+                  0,
+                  0.65,
+                  1
+                ]
+              },
+              "label": ""
+            }
+          ],
+          "focus": [
+            "record",
+            "worker"
+          ]
+        },
+        {
+          "at": 15000,
+          "caption": "请求与读取返回保留各自方向，未返回时不生成结果。",
+          "items": {
+            "client": {
+              "wide": [
+                0.025,
+                170,
+                0.21,
+                110
+              ],
+              "narrow": [
+                0.2,
+                25,
+                0.6,
+                100
+              ],
+              "lines": [
+                "request"
+              ],
+              "state": "normal"
+            },
+            "runtime": {
+              "wide": [
+                0.28,
+                35,
+                0.42,
+                355
+              ],
+              "narrow": [
+                0.12,
+                165,
+                0.76,
+                390
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "worker",
+                "result"
+              ]
+            },
+            "worker": {
+              "wide": [
+                0.35,
+                90,
+                0.28,
+                110
+              ],
+              "narrow": [
+                0.24,
+                210,
+                0.52,
+                110
+              ],
+              "lines": [
+                "read → assemble"
+              ],
+              "state": "normal"
+            },
+            "record": {
+              "wide": [
+                0.745,
+                170,
+                0.23,
+                110
+              ],
+              "narrow": [
+                0.2,
+                630,
+                0.6,
+                110
+              ],
+              "lines": [
+                "record data"
+              ],
+              "state": "normal"
+            },
+            "result": {
+              "wide": [
+                0.35,
+                260,
+                0.28,
+                90
+              ],
+              "narrow": [
+                0.24,
+                410,
+                0.52,
+                95
+              ],
+              "lines": [
+                "not created"
+              ],
+              "state": "normal"
+            }
+          },
+          "facts": [
+            "ready",
+            "received",
+            "read",
+            "returned"
+          ],
+          "links": [
+            {
+              "relation": "flow-2",
+              "state": "idle",
+              "label": ""
+            }
+          ],
+          "focus": [
+            "worker"
+          ]
+        },
+        {
+          "at": 18500,
+          "caption": "返回已确认，Worker 才创建结果。",
+          "items": {
+            "client": {
+              "wide": [
+                0.025,
+                170,
+                0.21,
+                110
+              ],
+              "narrow": [
+                0.2,
+                25,
+                0.6,
+                100
+              ],
+              "lines": [
+                "request"
+              ],
+              "state": "normal"
+            },
+            "runtime": {
+              "wide": [
+                0.28,
+                35,
+                0.42,
+                355
+              ],
+              "narrow": [
+                0.12,
+                165,
+                0.76,
+                390
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "worker",
+                "result"
+              ]
+            },
+            "worker": {
+              "wide": [
+                0.35,
+                90,
+                0.28,
+                110
+              ],
+              "narrow": [
+                0.24,
+                210,
+                0.52,
+                110
+              ],
+              "lines": [
+                "read → assemble"
+              ],
+              "state": "normal"
+            },
+            "record": {
+              "wide": [
+                0.745,
+                170,
+                0.23,
+                110
+              ],
+              "narrow": [
+                0.2,
+                630,
+                0.6,
+                110
+              ],
+              "lines": [
+                "record data"
+              ],
+              "state": "normal"
+            },
+            "result": {
+              "wide": [
+                0.35,
+                260,
+                0.28,
+                90
+              ],
+              "narrow": [
+                0.24,
+                410,
+                0.52,
+                95
+              ],
+              "lines": [
+                "not created"
+              ],
+              "state": "normal"
+            }
+          },
+          "facts": [
+            "ready",
+            "received",
+            "read",
+            "returned"
+          ],
+          "links": [
+            {
+              "relation": "flow-3",
+              "state": "flow",
+              "travel": 1700,
+              "transfer": {
+                "timing": "continuous",
+                "scope": "route",
+                "effect": "soft",
+                "easing": [
+                  0.35,
+                  0,
+                  0.65,
+                  1
+                ]
+              },
+              "label": ""
+            }
+          ],
+          "focus": [
+            "worker",
+            "result"
+          ]
+        },
+        {
+          "at": 20900,
+          "caption": "返回已确认，Worker 才创建结果。",
+          "items": {
+            "client": {
+              "wide": [
+                0.025,
+                170,
+                0.21,
+                110
+              ],
+              "narrow": [
+                0.2,
+                25,
+                0.6,
+                100
+              ],
+              "lines": [
+                "request"
+              ],
+              "state": "normal"
+            },
+            "runtime": {
+              "wide": [
+                0.28,
+                35,
+                0.42,
+                355
+              ],
+              "narrow": [
+                0.12,
+                165,
+                0.76,
+                390
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "worker",
+                "result"
+              ]
+            },
+            "worker": {
+              "wide": [
+                0.35,
+                90,
+                0.28,
+                110
+              ],
+              "narrow": [
+                0.24,
+                210,
+                0.52,
+                110
+              ],
+              "lines": [
+                "read → assemble"
+              ],
+              "state": "normal"
+            },
+            "record": {
+              "wide": [
+                0.745,
+                170,
+                0.23,
+                110
+              ],
+              "narrow": [
+                0.2,
+                630,
+                0.6,
+                110
+              ],
+              "lines": [
+                "record data"
+              ],
+              "state": "normal"
+            },
+            "result": {
+              "wide": [
+                0.35,
+                260,
+                0.28,
+                90
+              ],
+              "narrow": [
+                0.24,
+                410,
+                0.52,
+                95
+              ],
+              "lines": [
+                "created after return"
+              ],
+              "state": "done"
+            }
+          },
+          "facts": [
+            "ready",
+            "received",
+            "read",
+            "returned",
+            "created"
+          ],
+          "links": [
+            {
+              "relation": "flow-3",
+              "state": "idle",
+              "label": ""
+            }
+          ],
+          "focus": [
+            "result"
+          ]
+        },
+        {
+          "at": 23900,
+          "caption": "四种事实顺序保持一致：请求接收、读取、返回、结果。风格改变节点和路径组织，不能改变确认含义。",
+          "items": {
+            "client": {
+              "wide": [
+                0.025,
+                170,
+                0.21,
+                110
+              ],
+              "narrow": [
+                0.2,
+                25,
+                0.6,
+                100
+              ],
+              "lines": [
+                "request"
+              ],
+              "state": "normal"
+            },
+            "runtime": {
+              "wide": [
+                0.28,
+                35,
+                0.42,
+                355
+              ],
+              "narrow": [
+                0.12,
+                165,
+                0.76,
+                390
+              ],
+              "lines": [],
+              "state": "normal",
+              "contains": [
+                "worker",
+                "result"
+              ]
+            },
+            "worker": {
+              "wide": [
+                0.35,
+                90,
+                0.28,
+                110
+              ],
+              "narrow": [
+                0.24,
+                210,
+                0.52,
+                110
+              ],
+              "lines": [
+                "read → assemble"
+              ],
+              "state": "normal"
+            },
+            "record": {
+              "wide": [
+                0.745,
+                170,
+                0.23,
+                110
+              ],
+              "narrow": [
+                0.2,
+                630,
+                0.6,
+                110
+              ],
+              "lines": [
+                "record data"
+              ],
+              "state": "normal"
+            },
+            "result": {
+              "wide": [
+                0.35,
+                260,
+                0.28,
+                90
+              ],
+              "narrow": [
+                0.24,
+                410,
+                0.52,
+                95
+              ],
+              "lines": [
+                "created after return"
+              ],
+              "state": "done"
+            }
+          },
+          "facts": [
+            "ready",
+            "received",
+            "read",
+            "returned",
+            "created"
+          ],
+          "links": [],
+          "focus": []
+        }
+      ]
+    }
+  ]
+}
